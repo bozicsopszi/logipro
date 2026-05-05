@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>LogiVizsga Pro 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gold-l:#E8C96A;--gold-d:#9A7A2E;
+  --black:#0A0A0A;--d1:#111;--d2:#1A1A1A;--d3:#222;--d4:#2A2A2A;
+  --text:#F0EAD6;--tm:#8A8070;--td:#5A5040;
+  --green:#2ECC71;--red:#E74C3C;--blue:#3498DB;--orange:#E67E22;
+  --gbg:rgba(46,204,113,.13);--rbg:rgba(231,76,60,.13);--bbg:rgba(52,152,219,.13);
+  --r:12px;--rs:8px
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+/* ── SPLASH ── */
+#splash{position:fixed;inset:0;z-index:100;background:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+#splash.gone{display:none}
+.sp-logo{width:84px;height:84px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;animation:spSpin 1.1s ease both}
+@keyframes spSpin{from{transform:rotate(-180deg) scale(0);opacity:0}65%{transform:rotate(8deg) scale(1.05)}to{transform:rotate(0) scale(1);opacity:1}}
+.sp-title{font-family:'Playfair Display',serif;font-size:clamp(24px,4.5vw,44px);color:var(--gold);text-align:center;animation:fUp .7s .4s both}
+.sp-sub{color:var(--tm);font-size:12px;letter-spacing:3px;text-transform:uppercase;animation:fUp .7s .65s both}
+.sp-year{color:var(--gold-d);font-size:22px;font-weight:600;letter-spacing:2px;animation:fUp .7s .8s both}
+.sp-bar{width:200px;height:2px;background:var(--d3);border-radius:2px;overflow:hidden;animation:fUp .7s .95s both}
+.sp-fill{height:100%;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));animation:bFill 2s 1.05s both}
+@keyframes bFill{from{width:0}to{width:100%}}
+.sp-author{color:var(--td);font-size:13px;animation:fUp .7s 1.1s both}
+@keyframes fUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:50;background:rgba(10,10,10,.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,168,76,.2);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold);display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.nav-badge{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:var(--gold);font-size:10px;letter-spacing:1px;padding:3px 8px;border-radius:4px}
+.nav-stats{display:flex;gap:20px}
+.nstat-v{font-size:17px;font-weight:600;color:var(--gold)}
+.nstat-l{font-size:10px;color:var(--tm);text-transform:uppercase;letter-spacing:1px}
+
+/* ── HOME ── */
+#home{padding:56px 24px 60px;max-width:1120px;margin:0 auto}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:100px;padding:6px 16px;font-size:12px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:18px}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,62px);line-height:1.1;margin-bottom:14px}
+.hero-h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold-d),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{color:var(--tm);font-size:16px;max-width:560px;line-height:1.7;margin-bottom:34px}
+.slbl{font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.slbl::after{content:'';flex:1;height:1px;background:rgba(201,168,76,.2)}
+.mt{margin-top:40px}
+
+/* CAT GRID */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:16px;margin-bottom:44px}
+.cat-card{background:var(--d2);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);padding:22px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
+.cat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .22s}
+.cat-card:hover{border-color:rgba(201,168,76,.4);transform:translateY(-3px);background:var(--d3)}
+.cat-card:hover::before{opacity:1}
+.cat-icon{font-size:30px;margin-bottom:10px}
+.cat-name{font-family:'Playfair Display',serif;font-size:17px;color:var(--gold);margin-bottom:5px}
+.cat-desc{font-size:12px;color:var(--tm);line-height:1.5;margin-bottom:12px}
+.cat-meta{display:flex;gap:10px;font-size:11px;color:var(--td)}
+.cat-pb{margin-top:12px;height:3px;background:var(--d4);border-radius:3px;overflow:hidden}
+.cat-pf{height:100%;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));border-radius:3px;transition:width .5s}
+
+/* SPECIAL */
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:44px}
+.spec-card{background:linear-gradient(135deg,var(--d2),var(--d3));border:1px solid rgba(201,168,76,.28);border-radius:var(--r);padding:26px;cursor:pointer;transition:all .22s}
+.spec-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.spec-badge{display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.35);color:var(--gold);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:4px;margin-bottom:12px}
+.spec-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--text);margin-bottom:7px}
+.spec-desc{font-size:13px;color:var(--tm);line-height:1.5}
+
+/* ── QUIZ ── */
+#quiz-screen{display:none;max-width:760px;margin:0 auto;padding:36px 24px 80px}
+.qhdr{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.btn-back{background:var(--d3);border:1px solid rgba(201,168,76,.2);color:var(--gold);padding:8px 16px;border-radius:var(--rs);cursor:pointer;font-size:13px;transition:all .2s;font-family:'DM Sans',sans-serif}
+.btn-back:hover{background:rgba(201,168,76,.1);border-color:var(--gold)}
+.qhdr-info{flex:1}
+.qhdr-cat{font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:3px}
+.qhdr-title{font-family:'Playfair Display',serif;font-size:22px}
+
+/* progress */
+.pstrip{display:flex;gap:4px;margin-bottom:28px;flex-wrap:wrap}
+.pdot{width:22px;height:4px;border-radius:4px;background:var(--d3);transition:background .3s;flex-shrink:0}
+.pdot.ok{background:var(--green)}
+.pdot.no{background:var(--red)}
+.pdot.cur{background:var(--gold);animation:pulse 1s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+/* question */
+.qcard{background:var(--d2);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);padding:28px;margin-bottom:18px;animation:qIn .3s ease}
+@keyframes qIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.qnum{font-size:11px;color:var(--td);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.qtxt{font-size:17px;line-height:1.65;color:var(--text);margin-bottom:24px}
+.qextra{background:var(--d3);border-left:3px solid var(--gold-d);border-radius:0 var(--rs) var(--rs) 0;padding:11px 15px;font-size:13px;color:var(--tm);margin-bottom:20px;line-height:1.6}
+.answers{display:flex;flex-direction:column;gap:9px}
+.abtn{background:var(--d3);border:1.5px solid rgba(201,168,76,.12);border-radius:var(--rs);padding:13px 17px;cursor:pointer;text-align:left;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;transition:all .18s;display:flex;align-items:flex-start;gap:11px}
+.abtn:not(.done):hover{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.4);transform:translateX(4px)}
+.albl{min-width:22px;height:22px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gold);font-weight:600;flex-shrink:0;margin-top:1px}
+.abtn.ok-ans{background:var(--gbg)!important;border-color:var(--green)!important;cursor:default}
+.abtn.ok-ans .albl{background:var(--green);border-color:var(--green);color:#000}
+.abtn.no-ans{background:var(--rbg)!important;border-color:var(--red)!important;cursor:default}
+.abtn.no-ans .albl{background:var(--red);border-color:var(--red);color:#fff}
+.abtn.dim{opacity:.38;cursor:default}
+.exp-box{background:var(--d3);border:1px solid rgba(201,168,76,.22);border-radius:var(--rs);padding:16px 18px;margin-top:14px;animation:expIn .35s ease}
+@keyframes expIn{from{opacity:0}to{opacity:1}}
+.exp-lbl{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:5px}
+.exp-txt{font-size:13px;line-height:1.7;color:var(--tm)}
+.btn-next{margin-top:18px;background:linear-gradient(135deg,var(--gold-d),var(--gold));border:none;color:#000;padding:13px 28px;border-radius:var(--rs);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;display:none;transition:all .18s}
+.btn-next:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.btn-next.show{display:block}
+
+/* ── RESULTS ── */
+#res-screen{display:none;max-width:700px;margin:0 auto;padding:56px 24px;text-align:center}
+.res-circle{width:130px;height:130px;border-radius:50%;border:3px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 28px;background:rgba(201,168,76,.05)}
+.res-pct{font-family:'Playfair Display',serif;font-size:38px;color:var(--gold)}
+.res-lbl{font-size:11px;color:var(--tm);letter-spacing:1px}
+.res-h2{font-family:'Playfair Display',serif;font-size:30px;margin-bottom:10px}
+.res-msg{color:var(--tm);font-size:15px;margin-bottom:36px}
+.res-stats{display:flex;justify-content:center;gap:28px;margin-bottom:36px}
+.rst{text-align:center}
+.rst-v{font-size:30px;font-weight:600}
+.rst-l{font-size:11px;color:var(--tm)}
+.vg{color:var(--green)}.vr{color:var(--red)}
+.btn-pri{background:linear-gradient(135deg,var(--gold-d),var(--gold));border:none;color:#000;padding:13px 28px;border-radius:var(--rs);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;margin:7px;transition:all .18s}
+.btn-pri:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.btn-sec{background:transparent;border:1.5px solid rgba(201,168,76,.4);color:var(--gold);padding:13px 28px;border-radius:var(--rs);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;margin:7px;transition:all .18s}
+.btn-sec:hover{background:rgba(201,168,76,.08)}
+
+/* ── CMR ── */
+#cmr-screen{display:none;max-width:920px;margin:0 auto;padding:36px 24px 80px}
+.cmr-wrap{background:var(--d2);border:1px solid rgba(201,168,76,.2);border-radius:var(--r);overflow:hidden}
+.cmr-hdr{background:linear-gradient(135deg,var(--d3),var(--d4));border-bottom:2px solid var(--gold-d);padding:18px 22px;display:flex;align-items:center;justify-content:space-between}
+.cmr-logo{font-family:'Playfair Display',serif;font-size:26px;color:var(--gold);letter-spacing:4px}
+.cmr-sub{font-size:10px;color:var(--tm);letter-spacing:1px}
+.cmr-body{padding:20px}
+.cmr-scenario{background:var(--d3);border:1px solid rgba(201,168,76,.18);border-radius:var(--rs);padding:18px;margin-bottom:18px}
+.cmr-stitle{font-family:'Playfair Display',serif;font-size:17px;color:var(--gold);margin-bottom:10px}
+.cmr-sdata{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:7px;font-size:13px;color:var(--tm);line-height:1.6}
+.cmr-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.cmr-cell{border:1px solid rgba(201,168,76,.1);padding:10px 14px}
+.cmr-full{grid-column:1/-1}
+.cmr-clbl{font-size:10px;color:var(--gold-d);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.cmr-cnum{font-size:9px;color:var(--td);margin-bottom:5px}
+.cmr-inp{background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,.2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;width:100%;padding:4px 0;outline:none;transition:border-color .2s}
+.cmr-inp:focus{border-color:var(--gold)}
+.cmr-inp.ok{border-color:var(--green);color:var(--green)}
+.cmr-inp.bad{border-color:var(--red);color:var(--red)}
+.cmr-chk{background:linear-gradient(135deg,var(--gold-d),var(--gold));border:none;color:#000;padding:12px 28px;border-radius:var(--rs);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;margin-top:16px;margin-right:10px;transition:all .18s}
+.cmr-chk:hover{filter:brightness(1.1)}
+
+/* ── CALC / INTERACTIVE SCREENS ── */
+#calc-screen,#mrp-screen,#fifo-screen,#oee-screen,#supplier-screen,#makeorbuy-screen{display:none;max-width:860px;margin:0 auto;padding:36px 24px 80px}
+.prob-card{background:var(--d2);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);padding:26px;margin-bottom:18px}
+.prob-lbl{font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:7px}
+.prob-q{font-size:16px;line-height:1.65;color:var(--text);margin-bottom:16px}
+.prob-data{background:var(--d3);border-left:3px solid var(--gold-d);padding:11px 15px;border-radius:0 var(--rs) var(--rs) 0;font-size:13px;color:var(--tm);margin-bottom:16px;line-height:1.8}
+.inp-row{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.calc-inp{flex:1;background:var(--d3);border:1.5px solid rgba(201,168,76,.2);border-radius:var(--rs);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:11px 14px;outline:none;transition:border-color .2s}
+.calc-inp:focus{border-color:var(--gold)}
+.calc-inp.ok{border-color:var(--green);background:var(--gbg)}
+.calc-inp.bad{border-color:var(--red);background:var(--rbg)}
+.unit{font-size:13px;color:var(--tm);white-space:nowrap}
+.chk-btn{background:linear-gradient(135deg,var(--gold-d),var(--gold));border:none;color:#000;padding:11px 22px;border-radius:var(--rs);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;transition:all .18s;white-space:nowrap}
+.chk-btn:hover{filter:brightness(1.1)}
+.fb-box{margin-top:10px;border-radius:var(--rs);padding:14px 16px;font-size:13px;line-height:1.7}
+.fb-ok{background:var(--gbg);border:1px solid var(--green)}
+.fb-bad{background:var(--rbg);border:1px solid var(--red)}
+
+/* TABLE STYLES */
+.tbl-wrap{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{background:rgba(201,168,76,.12);color:var(--gold);padding:8px 10px;text-align:left;border:1px solid rgba(201,168,76,.15);font-weight:500;letter-spacing:.5px;font-size:12px}
+td{padding:7px 10px;border:1px solid rgba(255,255,255,.06);color:var(--tm);vertical-align:middle}
+tr:hover td{background:rgba(201,168,76,.04)}
+td input{background:var(--d3);border:1px solid rgba(201,168,76,.2);border-radius:4px;color:var(--text);font-size:13px;padding:4px 7px;outline:none;width:80px;font-family:'DM Sans',sans-serif}
+td input:focus{border-color:var(--gold)}
+td input.ok{border-color:var(--green);color:var(--green)}
+td input.bad{border-color:var(--red);color:var(--red)}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(201,168,76,.1);padding:28px 24px;text-align:center;color:var(--td);font-size:12px;position:relative;z-index:1}
+footer strong{color:var(--gold)}
+
+/* UTILS */
+.hidden{display:none!important}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--d4);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-d)}
+@media(max-width:600px){.cat-grid{grid-template-columns:1fr}.cmr-grid{grid-template-columns:1fr}.nav-stats{display:none}}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="sp-logo">⚓</div>
+  <div class="sp-title">LogiVizsga Pro</div>
+  <div class="sp-sub">Logisztikai Technikus · Szakmai Vizsga</div>
+  <div class="sp-year">2026</div>
+  <div class="sp-bar"><div class="sp-fill"></div></div>
+  <div class="sp-author">Készítette: <strong style="color:var(--gold)">Weiger Valentin</strong></div>
+</div>
+
+<div id="app">
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="goHome()"><span>⚓</span> LogiVizsga Pro <span class="nav-badge">2026</span></div>
+  <div class="nav-stats">
+    <div class="nstat"><div class="nstat-v" id="nv-total">0</div><div class="nstat-l">Megoldott</div></div>
+    <div class="nstat"><div class="nstat-v" id="nv-ok" style="color:var(--green)">0</div><div class="nstat-l">Helyes</div></div>
+    <div class="nstat"><div class="nstat-v" id="nv-pct">0%</div><div class="nstat-l">Arány</div></div>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="home">
+  <div class="hero-tag">📦 Szakmai vizsgafelkészítő · 2025/2026 tanév</div>
+  <h1 class="hero-h1">Logisztikai<br><em>Technikus</em><br>Vizsgafelkészítő</h1>
+  <p class="hero-desc">A 2026-os komplex szakmai vizsga teljes anyaga: írásbeli tesztek, interaktív MRP/DRP táblák, FIFO/LIFO/HIFO készletértékelés, OEE számítás, CMR fuvarlevél, make-or-buy kalkuláció és még sok más.</p>
+
+  <div class="slbl">Elméleti tesztek</div>
+  <div class="cat-grid" id="cat-grid"></div>
+
+  <div class="slbl mt">Interaktív számítási feladatok (2026-os vizsga típusfeladatai)</div>
+  <div class="spec-grid">
+    <div class="spec-card" onclick="showScreen('mrp-screen');renderMRP()">
+      <div class="spec-badge">MRP · Kötelező</div>
+      <div class="spec-title">Anyagszükséglet-tervezés (MRP)</div>
+      <div class="spec-desc">Töltsd ki az MRP táblát: bruttó igény, ütemezett készlet, nettó igény, rendelések.</div>
+    </div>
+    <div class="spec-card" onclick="showScreen('fifo-screen');renderFIFO()">
+      <div class="spec-badge">FIFO / LIFO / HIFO · Kötelező</div>
+      <div class="spec-title">Készletértékelés</div>
+      <div class="spec-desc">Számítsd ki a készlet záróértékét és az elhasznált anyagköltséget FIFO, LIFO és HIFO módszerrel.</div>
+    </div>
+    <div class="spec-card" onclick="showScreen('oee-screen');renderOEE()">
+      <div class="spec-badge">OEE · Kötelező</div>
+      <div class="spec-title">Teljes Eszközhatékonyság (OEE)</div>
+      <div class="spec-desc">Számítsd ki a Rendelkezésre állás, Teljesítmény és Minőség mutatókat, majd az OEE értéket.</div>
+    </div>
+    <div class="spec-card" onclick="showScreen('supplier-screen');renderSupplier()">
+      <div class="spec-badge">Beszállítói értékelés · Kötelező</div>
+      <div class="spec-title">Beszállítói Értékelés</div>
+      <div class="spec-desc">Súlyozott pontszám módszerrel értékeld a beszállítókat és döntsd el, melyiket válaszd.</div>
+    </div>
+    <div class="spec-card" onclick="showScreen('makeorbuy-screen');renderMakeOrBuy()">
+      <div class="spec-badge">Make or Buy · Választható</div>
+      <div class="spec-title">Gyártani vagy Beszerezni?</div>
+      <div class="spec-desc">Számítsd ki a közömbösségi pontot és döntsd el, melyik opció gazdaságosabb adott mennyiségnél.</div>
+    </div>
+    <div class="spec-card" onclick="showScreen('calc-screen');renderCalc()">
+      <div class="spec-badge">Számítások · Komplex</div>
+      <div class="spec-title">EOQ · Rendelési pont · Biztonsági készlet</div>
+      <div class="spec-desc">Gazdaságos rendelési mennyiség, rendelési és tárolási költség, rendelési készletszint.</div>
+    </div>
+    <div class="spec-card" onclick="showScreen('cmr-screen');renderCMR()">
+      <div class="spec-badge">Interaktív okmány</div>
+      <div class="spec-title">CMR Fuvarlevél Kitöltés</div>
+      <div class="spec-desc">Töltsd ki a CMR fuvarlevelet valós forgatókönyv adatai alapján, mezőellenőrzéssel.</div>
+    </div>
+  </div>
+
+  <p style="color:var(--td);font-size:13px;text-align:center;margin-top:16px">
+    Készítette: <strong style="color:var(--gold)">Weiger Valentin</strong> · Logisztikai Technikus Vizsgafelkészítő 2026
+  </p>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz-screen">
+  <div class="qhdr">
+    <button class="btn-back" onclick="goHome()">← Vissza</button>
+    <div class="qhdr-info">
+      <div class="qhdr-cat" id="q-cat-lbl"></div>
+      <div class="qhdr-title" id="q-title"></div>
+    </div>
+  </div>
+  <div class="pstrip" id="pstrip"></div>
+  <div id="q-container"></div>
+</div>
+
+<!-- RESULTS -->
+<div id="res-screen">
+  <div class="res-circle">
+    <div class="res-pct" id="r-pct">0%</div>
+    <div class="res-lbl">eredmény</div>
+  </div>
+  <h2 class="res-h2" id="r-title"></h2>
+  <p class="res-msg" id="r-msg"></p>
+  <div class="res-stats">
+    <div class="rst"><div class="rst-v vg" id="r-ok">0</div><div class="rst-l">Helyes</div></div>
+    <div class="rst"><div class="rst-v vr" id="r-no">0</div><div class="rst-l">Hibás</div></div>
+    <div class="rst"><div class="rst-v" id="r-tot">0</div><div class="rst-l">Összes</div></div>
+  </div>
+  <button class="btn-pri" id="r-retry">Újra</button>
+  <button class="btn-sec" onclick="goHome()">Főmenü</button>
+</div>
+
+<!-- CMR -->
+<div id="cmr-screen">
+  <div class="qhdr">
+    <button class="btn-back" onclick="goHome()">← Vissza</button>
+    <div class="qhdr-info"><div class="qhdr-cat">Interaktív okmány</div><div class="qhdr-title">CMR Fuvarlevél Kitöltés</div></div>
+  </div>
+  <div id="cmr-content"></div>
+</div>
+
+<!-- CALC -->
+<div id="calc-screen">
+  <div class="qhdr">
+    <button class="btn-back" onclick="goHome()">← Vissza</button>
+    <div class="qhdr-info"><div class="qhdr-cat">Számítási feladatok</div><div class="qhdr-title">EOQ · Rendelési pont · Biztonsági készlet</div></div>
+  </div>
+  <div id="calc-content"></div>
+</div>
+
+<!-- MRP -->
+<div id="mrp-screen">
+  <div class="qhdr">
+    <button class="btn-back" onclick="goHome()">← Vissza</button>
+    <div class="qhdr-info"><div class="qhdr-cat">Kötelező feladat</div><div class="qhdr-title">Anyagszükséglet-tervezés (MRP)</div></div>
+  </div>
+  <div id="mrp-content"></div>
+</div>
+
+<!-- FIFO/LIFO/HIFO -->
+<div id="fifo-screen">
+  <div class="qhdr">
+    <button class="btn-back" onclick="goHome()">← Vissza</button>
+    <div class="qhdr-info"><div class="qhdr-cat">Kötelező feladat</div><div class="qhdr-title">Készletértékelés: FIFO / LIFO / HIFO</div></div>
+  </div>
+  <div id="fifo-content"></div>
+</div>
+
+<!-- OEE -->
+<div id="oee-screen">
+  <div class="qhdr">
+    <button class="btn-back" onclick="goHome()">← Vissza</button>
+    <div class="qhdr-info"><div class="qhdr-cat">Kötelező feladat</div><div class="qhdr-title">OEE – Teljes Eszközhatékonysági Mutató</div></div>
+  </div>
+  <div id="oee-content"></div>
+</div>
+
+<!-- SUPPLIER -->
+<div id="supplier-screen">
+  <div class="qhdr">
+    <button class="btn-back" onclick="goHome()">← Vissza</button>
+    <div class="qhdr-info"><div class="qhdr-cat">Kötelező feladat</div><div class="qhdr-title">Beszállítói Értékelés – Súlyozott módszer</div></div>
+  </div>
+  <div id="supplier-content"></div>
+</div>
+
+<!-- MAKE OR BUY -->
+<div id="makeorbuy-screen">
+  <div class="qhdr">
+    <button class="btn-back" onclick="goHome()">← Vissza</button>
+    <div class="qhdr-info"><div class="qhdr-cat">Választható feladat</div><div class="qhdr-title">Make or Buy – Gyártani vagy Beszerezni?</div></div>
+  </div>
+  <div id="makeorbuy-content"></div>
+</div>
+
+<footer>
+  <strong>LogiVizsga Pro 2026</strong> · Logisztikai Technikus Vizsgafelkészítő<br>
+  <span style="font-size:11px">Készítette: <strong>Weiger Valentin</strong></span>
+</footer>
+</div><!-- end #app -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// ADATBÁZIS – 2026-os vizsgakövetelmények szerinti kérdések
+// ═══════════════════════════════════════════════════════════
+const CATS = [
+  {
+    id:'alap', icon:'📚', name:'Logisztikai Alapismeretek',
+    desc:'Ellátási lánc, mikrologisztika, ellátási lánc szereplői – 2026-os vizsga 1. témakör',
+    qs:[
+      {q:'Mi a mikrologisztikai rendszer?',opts:['Kis vállalkozások logisztikája','Egy vállalaton belüli anyag- és információáramlás tervezése és irányítása','Mikrochipek szállítása','1 km-nél rövidebb fuvarozás'],c:1,e:'Mikrologisztika: egyetlen vállalaton belüli logisztikai folyamatok összessége (készletezés, anyagmozgatás, raktározás, belső szállítás). Szemben a makrologisztikával, amely az egész gazdaság szintjén értelmezi a logisztikát.'},
+      {q:'Melyek az ellátási lánc fő szereplői?',opts:['Csak a termelők és fogyasztók','Alapanyag-kitermelők, gyártók, nagykereskedők, kiskereskedők, végső fogyasztók – és a logisztikai szolgáltatók','Kizárólag a fuvarozó cégek','Bankok és biztosítók'],c:1,e:'Az ellátási lánc (supply chain) szereplői: nyersanyag-kitermelők → feldolgozók/gyártók → nagykereskedők → kiskereskedők → végső fogyasztók. Mellettük a 3PL/4PL logisztikai szolgáltatók, bankok és vámhatóságok is részt vesznek a lánc működtetésében.'},
+      {q:'Mit jelent az ellátási lánc menedzsment (SCM) fő célja?',opts:['A szállítási költségek maximalizálása','Az ellátási lánc összes tagjának koordinálása a végső fogyasztói igények hatékony és gazdaságos kielégítése érdekében','Kizárólag a készletek csökkentése','A szállítók számának növelése'],c:1,e:'SCM célja: az ellátási lánc minden szintjén az anyagi, információs és pénzügyi áramlások összehangolása, hogy a termék a megfelelő helyen, időben, mennyiségben és minőségben, a lehető legkisebb összes költséggel jusson el a fogyasztóhoz.'},
+      {q:'Mi a "bullwhip-effektus" (ostorvég-hatás)?',opts:['Az áru fizikai sérülése szállítás közben','A kis keresleti ingadozások felnagyítódása az ellátási lánc felső szakaszai felé haladva, egyre nagyobb készletingadozást okozva','A fuvarozó járművezetőjének ostor formájú útvonala','Szezonális keresletcsökkentés'],c:1,e:'Bullwhip-effektus: ha a kiskereskedő kis keresletnövekedést tapasztal, nagyobb rendelést ad a nagykereskedőnek, aki még nagyobb rendelést ad a gyártónak – a kis ingadozás felerősödik. Oka: késedelmes információ, tételes rendelés, ármozgás.'},
+      {q:'Mi a különbség a 3PL és 4PL logisztikai szolgáltató között?',opts:['Nincs különbség','3PL: fizikai logisztikai feladatokat végez (raktározás, fuvarozás). 4PL: az egész ellátási lánc irányítását és koordinálását vállalja át, akár több 3PL-t is menedzselve','3PL tengeri, 4PL légi szállítás','3PL belföldi, 4PL nemzetközi'],c:1,e:'3PL (Third Party Logistics): fizikai logisztikai feladatok kiszervezése – raktározás, fuvarozás, csomagolás. 4PL (Fourth Party Logistics): magasabb szintű, a teljes ellátási lánc koordinálása és optimalizálása, akár több 3PL-t menedzsel egységes platform alatt.'},
+      {q:'Mi a "push" és "pull" rendszer különbsége a logisztikában?',opts:['Push: jobbra, Pull: balra','Push: a termelés előrejelzés alapján tolja az árut az elosztási csatornán. Pull: a tényleges vevői igény húzza vissza a termelést/szállítást (pl. kanban)','Push: drágább, Pull: olcsóbb','Push: vasúti, Pull: közúti szállítás'],c:1,e:'Push rendszer: a gyártó előrejelzés alapján termeli és raktározza a terméket. Pull rendszer: a vevői megrendelés indítja el a termelési/szállítási folyamatot. A JIT és kanban tipikusan pull rendszerek – csökkentik a felesleges készleteket.'},
+      {q:'Mit jelent a "postponement" elv a logisztikában?',opts:['Szállítás halasztása','A végtermék véglegesítésének (pl. csomagolás, konfigurálás) az elosztási lánc lehető legkésőbbi pontjára halasztása a rugalmasság növelése érdekében','Rendelés visszautasítása','Raktári halasztó rendszer'],c:1,e:'Postponement (késleltetési elv): a termék egyediesítését (szín, konfiguráció, helyi csomagolás) minél később végzik el – így hosszabb ideig marad generikus készlet, ami rugalmasabban kezelhető. Pl. HP nyomtatókat globálisan gyártanak, helyi hálózati adaptert lokálisan szerelik fel.'},
+      {q:'Mi a SCOR modell (Supply Chain Operations Reference)?',opts:['Egy szállítmányozási díjszabás','Az ellátási lánc folyamatainak szabványos referencia-modellje (Tervezés, Forrás, Gyártás, Szállítás, Visszaáramlás, Engedélyezés)','Raktári műveletek kézikönyve','Logisztikai minőségi szabvány'],c:1,e:'SCOR modell: az ellátási lánc 6 fő folyamata: Plan (tervezés), Source (forrás/beszerzés), Make (gyártás/termelés), Deliver (szállítás/elosztás), Return (visszaáramlás) és Enable (engedélyezés/támogató folyamatok). Segít a teljesítmény mérésében és összehasonlításában.'}
+    ]
+  },
+  {
+    id:'beszerzes', icon:'🛒', name:'Beszerzési Logisztika',
+    desc:'Beszerzési szükségletek, beszállítók kiválasztása, EOQ – 2026-os vizsga 2. témakör',
+    qs:[
+      {q:'Mik a fő szempontok a beszállítók kiválasztásánál?',opts:['Kizárólag az ár','Ár, minőség, megbízhatóság (szállítási pontosság), rugalmasság, pénzügyi stabilitás, fenntarthatóság','Csak a szállítási sebesség','Kizárólag a közelség'],c:1,e:'Beszállítói kiválasztás fő szempontjai: ár/költség, minőség (hibaarány), szállítési megbízhatóság és rugalmasság, kommunikáció, pénzügyi stabilitás, fenntarthatósági kritériumok. A vizsgán súlyozott értékelési módszerrel kell kalkulálni.'},
+      {q:'Mit jelent a "single sourcing" és "multiple sourcing" stratégia?',opts:['Egy forrásból vagy több forrásból való vásárlás','Single = drágább, Multiple = olcsóbb','Belföldi és külföldi szállítók','Egyszeri és ismétlődő megrendelések'],c:0,e:'Single sourcing: egy szállítótól szerzi be a vállalat az adott terméket (alacsonyabb ár, jobb kapcsolat, de kockázatos). Multiple sourcing: több szállítótól veszi ugyanazt a terméket (biztonságosabb, de bonyolultabb és esetleg drágább). Dual sourcing: kettő között kompromisszum.'},
+      {q:'Mi a "spend analysis" (kiadáselemzés) célja a beszerzésben?',opts:['Az alkalmazottak fizetéseinek elemzése','A vállalat összes vásárlási kiadásának kategorizálása és elemzése a megtakarítási lehetőségek azonosítása érdekében','Az üzemi kiadások csökkentése','Kizárólag a szállítási költségek nyomon követése'],c:1,e:'Spend analysis: az összes vásárlási adat összegyűjtése, tisztítása és elemzése kategóriák, szállítók és telephelyek szerint. Cél: azonosítani, hol és mennyit költ a cég, hogy a tárgyalások és konszolidáció révén megtakarításokat érjen el.'},
+      {q:'Mi a "blanket order" (keretmegrendelés)?',opts:['Üres megrendelőlap','Előre rögzített szállítóval kötött megállapodás, amely meghatározott időszakra és/vagy mennyiségre szól, de a tényleges szállítást külön lehívások ("call-off") indítják','Sürgős egyedi megrendelés','Visszavont megrendelés'],c:1,e:'Blanket order (keretmegrendelés): a szállítóval egy évre vagy adott időszakra rögzítik az árat és a maximális mennyiséget, de a tényleges szállítás kisebb tételekben, lehívással (call-off) történik. Csökkenti az adminisztrációt és biztosítja az árstabilitást.'},
+      {q:'Mi az "ABC-elemzés" haszna a beszerzési logisztikában?',opts:['Az áruk ábécérendbe sorolása','A termékek értékük/forgásuk alapján A, B, C kategóriákba sorolása – az A-s (magas értékű) tételekre fordítjuk a legtöbb figyelmet, a C-sekre a legkevesebbet','A szállítók minőségi besorolása','A raktár területének osztályozása'],c:1,e:'ABC-elemzés (Pareto-elv alapján): A kategória ≈ 20% tétel, 80% érték → szoros kontroll, gondos tárgyalás. B kategória ≈ 30% tétel, 15% érték → normál kezelés. C kategória ≈ 50% tétel, 5% érték → automatizált rendelés, minimális figyelem.'},
+      {q:'Mi a "kraljic mátrix" a beszerzésben?',opts:['Egy szállítási útvonal-tervező eszköz','Beszerzési portfólió-mátrix: a termékeket ellátási kockázat és pénzügyi hatás szerint négy kategóriába sorolja (rutinbeszerzés, szűk keresztmetszet, kiemelt, stratégiai)','Raktári polcrendszer tervező','Minőségellenőrzési mátrix'],c:1,e:'Kraljic mátrix (1983): vízszintes tengely = pénzügyi hatás (érték), függőleges tengely = ellátási kockázat. 4 cella: Rutin (alacsony-alacsony) → egyszerűsítés. Szűk keresztmetszet (alacsony értékű, magas kockázat) → biztonsági készlet. Kiemelt (magas érték, alacsony kockázat) → tárgyalás. Stratégiai (magas-magas) → partnerség.'},
+      {q:'Hogyan számítjuk a gazdaságos rendelési tételnagyságot (EOQ)?',opts:['EOQ = éves igény / szállítási idő','EOQ = √(2 × éves igény × rendelési költség / egységnyi tárolási költség)','EOQ = raktárterület / raklap mérete','EOQ = éves forgalom / átlagos készlet'],c:1,e:'EOQ (Wilson-képlet): √(2DS/H), ahol D = éves igény (db), S = egy rendelés feladásának fix költsége (Ft), H = egy egység éves tárolási költsége (Ft/db/év). Ennél a mennyiségnél a rendelési és tárolási költségek összege minimális.'},
+      {q:'Mit jelent a "TCO" fogalma a beszerzésben?',opts:['Total Cargo Operations','Total Cost of Ownership – a termék teljes életciklusára vetített összes tulajdonlási költség, beleértve a vételárat, szállítást, üzemeltetést, karbantartást és selejtezést','Transport Cost Optimization','Technical Control Operations'],c:1,e:'TCO (Total Cost of Ownership): a döntés nem csak a vételáron alapul, hanem figyelembe veszi a szállítási, raktározási, üzemeltetési, karbantartási és leselejtezési költségeket is. Olcsóbb vételárú termék magasabb TCO-val járhat!'}
+    ]
+  },
+  {
+    id:'termelesi', icon:'🏭', name:'Termelési Logisztika',
+    desc:'Just-in-Time, kanban, MRP, termelésütemezés – 2026-os vizsga 3. témakör',
+    qs:[
+      {q:'Mi a Just-in-Time (JIT) rendszer alapelve?',opts:['Minél korábban szerezd be az anyagot','Az anyagokat/alkatrészeket pontosan akkor és annyit rendelnek/szállítanak, amennyire és amikorra a termeléshez szükség van – a készletek minimalizálása érdekében','Minél nagyobb készletek tartása','Előre gyártás és raktározás'],c:1,e:'JIT: Toyota Production System által kifejlesztett elv. Cél: nulla várakozás, nulla felesleges készlet, nulla hibás termék. Előfeltétele a megbízható szállítók, kis tételek, rövid szállítási idők és stabil kereslet.'},
+      {q:'Hogyan működik a kanban rendszer?',opts:['Számítógépes megrendelési rendszer','Jelzőkártya-alapú húzó (pull) rendszer: a fogyasztó egység csak akkor jelzi az igényt (kártyával vagy elektronikusan), ha ténylegesen szüksége van az anyagra','Automata betárolási rendszer','Elektronikus készletfigyelő szoftver'],c:1,e:'Kanban: vizuális jelzőrendszer (kártya, tároló, konténer), amely a termelési/szállítási folyamatban az anyagmozgást vezérli. Ha egy tárolót kiürítenek, a kanban kártya visszamegy a forráshoz, ami jelzi: pótolni kell. Pull rendszer – nincs felesleges előre gyártás.'},
+      {q:'Mi a különbség az MRP és az MRP II rendszerek között?',opts:['MRP = anyagszükséglet-tervező, MRP II = gyártási erőforrás-tervező (kapacitás, munkaerő, pénzügy is)','Nincs különbség','MRP II csak kisvállalatoknak','MRP II kizárólag pénzügyi rendszer'],c:0,e:'MRP (Material Requirements Planning): csak az anyagszükségletek időbeli tervezésére fókuszál. MRP II (Manufacturing Resource Planning): kibővíti kapacitástervezéssel, munkaerő-tervezéssel, pénzügyi modellezéssel – az egész gyártási erőforrást tervezi.'},
+      {q:'Mi az MRP-tábla "nettó igény" sora?',opts:['A raktáron lévő összes készlet','A bruttó igény és az ütemezett raktárkészlet különbsége – az a mennyiség, amelyet ténylegesen rendelni/gyártani kell','Az összes megrendelt mennyiség','A biztonsági készlet szintje'],c:1,e:'MRP számítás: Nettó igény = Bruttó igény − Ütemezett készlet (ami az adott periódusban rendelkezésre áll). Ha a nettó igény pozitív, rendelést kell feladni. Az MRP-tábla sorai: Bruttó igény | Ütemezett bevételek | Rendelkezésre álló készlet | Nettó igény | Tervezett rendelések.'},
+      {q:'Mit jelent a "termelési lead time" az MRP-ben?',opts:['A gyár nyitvatartási ideje','Az az idő, amely a rendelés feladásától a termék elkészültéig/megérkezéséig telik el – ezt visszaütemezve határozza meg az MRP a rendelés időpontját','A dolgozók munkaideje','A gép beállítási ideje'],c:1,e:'Lead time (átfutási idő): ha pl. egy alkatrész lead time-ja 3 hét, és 5. héten kell, akkor az MRP a 2. hétre tervezi a rendelésfeladást (5−3=2). Ez az időeltolós visszaütemezés (backward scheduling) az MRP alapja.'},
+      {q:'Mi az OPT (Optimized Production Technology) elve?',opts:['Egy raktároptimalizáló szoftver','A szűk keresztmetszetek azonosítása és menedzselése – a termelési rendszer teljesítménye a szűk keresztmetszeten (bottleneck) múlik','Optikai szortírozó technológia','Optimalizált csomagolási technológia'],c:1,e:'OPT / Theory of Constraints (TOC): Eliyahu Goldratt elmélete. A gyártási rendszer teljesítményét a szűk keresztmetszet (bottle-neck) határozza meg. Célszerű a szűk keresztmetszeteket maximálisan kihasználni, és minden más folyamatot ehhez igazítani.'},
+      {q:'Mi a "SMED" módszer a lean gyártásban?',opts:['Statisztikai minőségellenőrzés','Single Minute Exchange of Die – az átállási idők csökkentése percek alá, belső és külső tevékenységek szétválasztásával','Szállítmányok mérési módszere','Selejtmennyiség csökkentési eljárás'],c:1,e:'SMED (Single Minute Exchange of Die): Shigeo Shingo által kidolgozott módszer az átállási idők drámai csökkentésére (cél: 10 percen belül). Kulcs: belső műveletek (gép állva kell) → külső műveletekké (gép menet közben elvégezhető) alakítása.'}
+    ]
+  },
+  {
+    id:'keszletezesi', icon:'📊', name:'Készletezési Logisztika',
+    desc:'Raktározás, készletgazdálkodás, leltár, FIFO/LIFO – 2026-os vizsga 4. témakör',
+    qs:[
+      {q:'Mik a készletek funkciói a vállalkozásnál?',opts:['Tőkemegsemmisítés','Biztosítja a folyamatos termelést/értékesítést, pufferolja a kereslet és kínálat ingadozásait, kihasználja az árengedményeket, véd az ellátási lánc zavaraitól','Kizárólag az eladásra váró áruk','Adóoptimalizálási eszköz'],c:1,e:'Készletek funkciói: 1) Biztonsági puffer (kereslet/ellátás ingadozása ellen) 2) Cikluskészlet (gazdaságos tételnagyságból adódó) 3) Szezonális készlet 4) Spekulatív készlet (várható áremelkedés) 5) Tranzit készlet (szállítás alatt lévő áru).'},
+      {q:'Mi a FEFO elv, és mikor kötelező alkalmazni?',opts:['First Entry, First Out – az elsőként berögzített tételt adjuk ki','First Expired, First Out – a leghamarabb lejáró terméket adjuk ki elsőként. EU-s élelmiszer-biztonsági és gyógyszerészeti jogszabályok szerint kötelező romlandó termékeknél','Gyors átfutási eljárás','Friss áru előre rakhely rendszer'],c:1,e:'FEFO (First Expired, First Out): a szavatossági idő alapján rendezi a kitárolást – a legrövidebb lejáratú termék megy ki legelőbb. Az EU 178/2002/EK és 852/2004/EK rendeletek alapján élelmiszerek esetén kötelező, de gyógyszereknél és vegyszereinél is általánosan alkalmazott.'},
+      {q:'Mi a készletforgási sebesség és hogyan számítják?',opts:['Készletforgás = Raktárterület / Készlet mennyisége','Készletforgás = Eladott áruk költsége (COGS) / Átlagos készletérték – megmutatja, hányszor cserélődik ki a készlet egy évben','Készletforgás = Megrendelések száma / Szállítások száma','Készletforgás = Bevételek / Kiadások'],c:1,e:'Készletforgás (inventory turnover) = COGS / Átlagos készletérték. Ha értéke pl. 12, akkor évente 12-szer cserélődik ki a teljes készlet (≈ havonta egyszer). A DSI (Days Sales of Inventory) = 360 / Készletforgás, megmutatja hány napig tart az átlagos készlet.'},
+      {q:'Mi a permanens (folyamatos) leltár?',opts:['Évenként egy alkalommal elvégzett leltár','A készletek minden mozgásnál azonnali rögzítése, így a nyilvántartás mindig aktuális – bármikor le lehet kérdezni a valós készletszintet','Negyedéves ciklikus leltározás','Váratlan, bejelentés nélküli készletellenőrzés'],c:1,e:'Permanens (perpetual) leltár: minden betárolást és kitárolást azonnal rögzítenek a rendszerben (WMS, ERP). Előnye: valós idejű készletinformáció, hibák azonnali észlelése. Szemben az időszakos (periodic) leltárral, ahol csak meghatározott időközönként számolnak készletet.'},
+      {q:'Mi a "raktárlogisztika 5 alapfunkciója"?',opts:['Tárolás, szállítás, értékesítés, számvitel, HR','Fogadás (áruátvétel), betárolás, tárolás, kitárolás (komissiózás), kiszállítás előkészítés (expediálás)','Tervezés, szervezés, irányítás, ellenőrzés, értékelés','Rendelés, gyártás, csomagolás, fuvarozás, számlázás'],c:1,e:'Raktár alapfolyamatai: 1) Áruátvétel/fogadás (bevételezés, ellenőrzés) 2) Betárolás (helymeghatározás, fizikai elhelyezés) 3) Tárolás (készlet-nyilvántartás, feltételek biztosítása) 4) Kitárolás/komissiózás (rendelés-kiszedés) 5) Expediálás (csomagolás, felcímkézés, rakodás, okmányolás).'},
+      {q:'Mi a "HIFO" készletértékelési módszer?',opts:['Legolcsóbb elsőként ki','Highest In, First Out – a legmagasabb bekerülési árú készletek kerülnek felhasználásra elsőként, ami a legmagasabb elhasználási értéket és a legalacsonyabb záróértéket eredményezi','Átlagos készletérték módszer','Utoljára be, elsőként ki'],c:1,e:'HIFO (Highest In, First Out): a legmagasabb bekerülési áron nyilvántartott készletet számoljuk el először. Eredménye: magas elhasznált anyagköltség → alacsony nyereség → kevesebb adó. Magyarországon és az EU-ban nem elfogadott adózási célokra, de belső kalkulációknál alkalmazható.'},
+      {q:'Mit jelent a WMS rendszer "putaway" funkciója?',opts:['A raktár biztonsági rendszere','Az áruátvétel után a rendszer javasol vagy meghatároz optimális tárolóhelyet az áru jellemzői (méret, súly, forgás, hőmérséklet-igény) alapján','A komissiózási feladatok kiosztása','A szállítólevél automatikus nyomtatása'],c:1,e:'Putaway: a WMS (Warehouse Management System) alapfunkciója – a beérkező árunak automatikusan rak helyet rendel az előre programozott szabályok alapján (pl. FEFO-megfelelés, helykihasználás, A-kategóriás termékek közelebb a kiszedőponthoz).'}
+    ]
+  },
+  {
+    id:'elosztasi', icon:'🚛', name:'Elosztási Logisztika',
+    desc:'Fuvarozás, szállítmányozás, DRP, INCOTERMS – 2026-os vizsga 5. témakör',
+    qs:[
+      {q:'Mi a DRP (Distribution Requirements Planning)?',opts:['Dokumentum Regisztrációs Program','Az elosztási hálózat szükségleteinek időbeli tervezése – hasonló az MRP-hez, de az elosztási csatornában a jövőbeli szállítási igényeket tervezi','Napi szállítási útvonal tervező','Raktár dokumentációs rendszer'],c:1,e:'DRP (Distribution Requirements Planning): az MRP elosztási megfelelője. A keresleti előrejelzésből kiindulva tervezi az elosztóközpontok, raktárak és kiskereskedők feltöltési szükségleteit időperiódusokra lebontva – hasonló táblázatstruktúra mint az MRP (bruttó igény, készlet, nettó igény, rendelések).'},
+      {q:'Mit jelent az FCA Incoterms záradék?',opts:['Free Cargo at Airport','Free Carrier – az eladó az általa megnevezett helyen átadja az árut a vevő által megbízott fuvarozónak; a kockázat az átadáskor száll át a vevőre','Freight Costs Agreed','Full Cost Advance'],c:1,e:'FCA (Free Carrier): az eladó az árut vámkezelve átadja a vevő fuvarozójának a megnevezett helyen (pl. az eladó raktáránál, konténer terminálnál). A kockázat az átadástól a vevőé. Minden szállítási módra alkalmazható – pl. légi és multimodális szállításhoz ajánlott az FOB helyett.'},
+      {q:'Mi a különbség a fuvarozó és a szállítmányozó között?',opts:['Ugyanaz a tevékenység','Fuvarozó: fizikailag végzi az áruszállítást saját eszközzel. Szállítmányozó: a fuvar szervezője, közvetítő – nem feltétlenül rendelkezik saját járművel, hanem fuvarozókat szervez be','Szállítmányozó csak tengeri szállítást végez','Fuvarozó csak belföldi, szállítmányozó csak nemzetközi'],c:1,e:'Fuvarozó (carrier): az árut saját vagy bérelt fuvarozóeszközzel ténylegesen szállítja, fuvarszerződés alapján felel. Szállítmányozó (freight forwarder): szervezi a fuvarozást, kiállítja az okmányokat, vámkezel, biztosítást köt – saját felelősséggel, de nem feltétlenül saját eszközzel szállít.'},
+      {q:'Mi az "intermodális fuvarozási egység" (ITE)?',opts:['Egységes fuvarlevél formátum','Konténer, cserefelépítmény vagy félpótkocsi, amelyet különböző szállítási módokon (hajó, vasút, közút) átrakodás nélkül lehet továbbítani','Egységes vám-azonosítószám','Közös fuvarozói engedély'],c:1,e:'Intermodális fuvarozási egység (Intermodal Transport Unit – ITU): szabványosított rakodási egység (ISO konténer, cserefelépítmény, megágyazott félpótkocsi), amelyet az átrakodás során magát az egységet mozgatják, a rakományhoz nem nyúlnak. Ez teszi lehetővé a hatékony multimodális szállítást.'},
+      {q:'Mi a "hub and spoke" elosztási modell?',opts:['Küllős-agyas kerék modell – a szállítmányok egy központi elosztópontba (hub) futnak össze, ahol konszolidálják/szétválogatják, majd továbbirányítják a célállomásokra (spoke)','Közvetlen pont-pont szállítás','Kizárólag légi szállítási rendszer','Raktárak hálózati modellje'],c:0,e:'Hub & Spoke: a futárszolgálatok, légi cargo és LTL fuvarozás alapmodellje. Az áru a legközelebbi hub-ba kerül, ahol konszolidálják (összegyűjtik és szétválogatják), majd a célhub-ba küldi tovább, ahol elosztják a végső címzetteknek. Hatékony, de nem a leggyorsabb út-az-út szállítás.'},
+      {q:'Mit jelent az "LTL" fuvarozás?',opts:['Long Transport Line','Less-than-Truckload – a feladott áru nem tölti meg a teljes teherautót; a fuvarozó több feladó küldeményét konszolidálja egy járaton','Large Truck Loading','Local Transport Logistics'],c:1,e:'LTL (Less-than-Truckload): a kisebb szállítmányokat több feladótól konszolidálják egy járaton – a feladó csak a ténylegesen felhasznált kapacitásért fizet. FTL (Full Truckload) esetén egy feladó foglalja le az egész járatot, gyorsabb de drágább kis szállítmányoknál.'}
+    ]
+  },
+  {
+    id:'szallitmanyozas', icon:'📋', name:'Szállítmányozás & Okmányok',
+    desc:'CMR, fuvarlevél-típusok, vám, ADR, felelősség',
+    qs:[
+      {q:'Mi a CMR fuvarlevél jogi szerepe?',opts:['Csak szállítási díjszabás','Bizonyítja a fuvarszerződés létrejöttét, az áru állapotát és mennyiségét az átvételkor, meghatározza a felek jogait és kötelezettségeit a CMR egyezmény alapján','Vámáru-nyilatkozat','Szállítói számla'],c:1,e:'CMR fuvarlevél: 1) Fuvarszerződés bizonyítéka (de nem feltétele – szóbeli is érvényes) 2) Áruátvételi elismervény 3) Bizonyítékul szolgál kárigénynél. A CMR egyezmény (1956, Genf) szabályozza a nemzetközi közúti fuvarozást. Nem értékpapír – szemben a tengeri konosszementtel.'},
+      {q:'Melyik egyezmény vonatkozik a vasúti fuvarozásra?',opts:['CMR','COTIF/CIM – Egységes Szabályok a Vasúti Árufuvarozásra vonatkozóan','Varsói Egyezmény','Hágai Szabályok'],c:1,e:'COTIF/CIM (Convention concerning International Carriage by Rail): vasúti árufuvarozás egységes szabályai. Fuvarlevele a CIM-fuvarlevél. Fuvarozói felelősség: 17 SDR/kg. Az OTIF szervezet felügyeli.'},
+      {q:'Mi az EORI szám és mire kötelező?',opts:['Európai fuvarozói regisztrációs szám','Economic Operators Registration and Identification – az EU-ban az összes vámeljáráshoz szükséges egységes gazdasági azonosítószám; kötelező minden EU-val kereskedő cégnek','Exportőri regisztrációs igazolás','Elektronikus okmánykezelő szám'],c:1,e:'EORI: az EU 474/2006/EK rendelete alapján minden gazdasági szereplőnek, aki EU-ban vámeljárást végez, rendelkeznie kell EORI számmal. Magyarországon a NAV adja ki, formátuma: HU + adószám első 8 jegye.'},
+      {q:'Mit jelent az ADR 1.3-as fejezete?',opts:['Csomagolási előírások','A veszélyes áruk szállításában részt vevő személyek képzési kötelezettsége – minden munkavállalót be kell tanítani a feladatkörének megfelelő szinten','Járműkövetelmények','Okmányolási előírások'],c:1,e:'ADR 1.3: a veszélyes áruk szállításával kapcsolatos személyek kötelező képzése. Szintek: általános tudatossági képzés (minden érintett), feladatspecifikus képzés (csomagoló, rakodó, fuvarozó), biztonsági tanácsadói képzés (DGSA – Dangerous Goods Safety Adviser).'},
+      {q:'Mi a fuvarozói felelősség korlátja CMR esetén áruveszteségnél?',opts:['Korlátlan felelősség','8,33 SDR/kg bruttó áruhiány – szándékos károkozás vagy súlyos gondatlanság esetén a korlát nem alkalmazható','25 EUR/kg','100 EUR/csomag'],c:1,e:'CMR 23. cikk: maximum 8,33 SDR (Különleges Lehívási Jog)/kg az elveszett/megsérült áru bruttó tömegére vetítve. Késedelem esetén a fuvardíj összegéig terjedhet a kártérítés. Szándékos károkozásnál (25. cikk) a korlát elesik.'},
+      {q:'Mi az "Intrastat" bevallás?',opts:['Éves adóbevallás','Az EU tagállamai közötti áruforgalom statisztikai célú adatszolgáltatása – meghatározott értékhatár felett kötelező az import és export oldalon is','Nemzetközi szállítmányozói engedély','Vámáru-nyilatkozat belföldön'],c:1,e:'Intrastat: az EU-n belüli (intra-community) kereskedelem statisztikai nyomon követése. Mivel az EU-n belül nincs vámhatár, a statisztika céljából a cégek havi szinten jelzik be az EU-s beérkezéseket és feladásokat, ha forgalmuk meghaladja az éves küszöbértéket (Magyarországon: 170 M Ft import / 100 M Ft export).'}
+    ]
+  },
+  {
+    id:'minoseg', icon:'⭐', name:'Minőség & Teljesítménymérés',
+    desc:'KPI-ok, OEE, logisztikai minőségi mutatók – 2026-os vizsga',
+    qs:[
+      {q:'Mi az OEE (Overall Equipment Effectiveness) három komponense?',opts:['Ár, Minőség, Sebesség','Rendelkezésre állás (Availability), Teljesítmény (Performance), Minőség (Quality) – OEE = A × P × Q','Gép, Ember, Anyag','Tervezés, Végrehajtás, Ellenőrzés'],c:1,e:'OEE = Rendelkezésre állás × Teljesítmény × Minőség. RA = Tényleges működési idő / Tervezett gyártási idő. Tel = Tényleges termelés / Max lehetséges termelés. Min = Jó termékek / Összes termelt. Pl.: 0,85 × 0,75 × 0,98 = 62,5%. World class OEE ≥ 85%.'},
+      {q:'Mi az "OTIF" mutató a logisztikában?',opts:['On Time In Full – az a rendelések aránya, amelyek pontosan időben ÉS teljes mennyiségben kerültek teljesítésre','Order Tracking and Invoicing Form','Optimal Time Index Formula','On The Invoice Form'],c:0,e:'OTIF (On Time, In Full): ha a rendelés 100 db, de csak 95-öt szállítottak, vagy ha határidőn túl érkezett – az OTIF szempontból nem teljesített. Szigorú mutató: mindkét feltételnek egyszerre kell teljesülnie. Célérték: általában 95–98%.'},
+      {q:'Mi a "fill rate" (kitöltési arány) mutató?',opts:['A raktár kitöltöttségi aránya','A rendelések azon aránya, amelyet raktárkészletből azonnal ki lehetett elégíteni, backorder (késedelmes szállítás) nélkül','A csomagolóanyag felhasználási hatékonysága','A jármű rakodottsági szintje'],c:1,e:'Fill rate (készletteljesítési arány): vevői megrendelések azon hányada, amelyet azonnal, raktárkészletből teljesíteni lehetett. Pl. 1000 tételből 970-et adtak ki azonnal → fill rate = 97%. Magas fill rate = alacsony készlethiány, de magasabb átlagos készlettartás.'},
+      {q:'Mik a logisztikai szolgáltatás minőségi mutatói a 2026-os vizsgán?',opts:['Csak szállítási sebesség','Rendelésteljesítési idő, szállítási pontosság (OTIF), készletteljesítési ráta (fill rate), reklamációs arány, kárarány, ügyfél-elégedettség','Kizárólag a szállítási költség','Csak a raktár kapacitáskihasználása'],c:1,e:'A logisztikai szolgáltatás minőségi KPI-ok: 1) Rendelési átfutási idő 2) OTIF % 3) Fill rate % 4) Kárarány (reklamáció/összes szállítás) 5) Készletpontosság (leltárkülönbség %) 6) Raktári produktivitás (sorrendek/óra) 7) Szállítási költség/rendelés.'},
+      {q:'Mi a "Six Sigma" alapelve a minőségirányításban?',opts:['6 lépéses gyártási folyamat','Statisztikai módszer, amely a folyamatok hibaarányát 3,4 hiba/millió lehetőségre (DPMO) kívánja csökkenteni; DMAIC ciklus: Definiálás, Mérés, Elemzés, Fejlesztés, Kontroll','6 féle minőségi osztály','Hat műszakos termelési rendszer'],c:1,e:'Six Sigma: Motorola (1986) fejlesztette ki. Cél: folyamatok 6 szigma (σ) pontosságra fejlesztése = 3,4 hiba/1 000 000 lehetőség. Módszer: DMAIC (Define-Measure-Analyze-Improve-Control). Lean Six Sigma = lean + Six Sigma kombinálva.'},
+      {q:'Mi a Balanced Scorecard (BSC) logisztikai alkalmazása?',opts:['Mérlegtábla a raktári terhek elosztásához','4 nézőpontból méri a logisztika teljesítményét: Pénzügyi, Vevői, Belső folyamatok, Tanulás és fejlődés – stratégiai célokat mérőszámokra bontja le','Egyensúlyi készletszámítás','Fuvarköltség-elosztási módszer'],c:1,e:'BSC (Balanced Scorecard): Kaplan–Norton (1992). Logisztikában: Pénzügyi nézőpont (pl. logisztikai cost/revenue ratio), Vevői (pl. OTIF, fill rate), Belső folyamatok (pl. raktári produktivitás, OEE), Tanulás (pl. képzési napok, rendszer bevezetés). Segíti a stratégiai célok operatív lebontását.'}
+    ]
+  },
+  {
+    id:'informatika', icon:'💻', name:'Logisztikai Informatika & Automatizálás',
+    desc:'ERP, WMS, TMS, RFID, vonalkód, AGV, robotizáció',
+    qs:[
+      {q:'Mi az ERP rendszer integrációs előnye a logisztikában?',opts:['Csak a bérszámfejtést kezeli','Egységes adatbázisban kezeli a készletet, megrendeléseket, számlázást, termelést és pénzügyet – valós idejű láthatóság az ellátási láncban','Csak a raktári folyamatokat automatizálja','Kizárólag a fuvarozó cégeknek készült'],c:1,e:'ERP (Enterprise Resource Planning, pl. SAP, Oracle, Microsoft Dynamics): egy integrált rendszerben kezeli a vállalat összes folyamatát. Logisztikai előny: valós idejű készletinformáció, automatikus rendelésindítás, szállítói számlák egyeztetése, igénytervezés (demand planning) egységes adatbázisból.'},
+      {q:'Mi az RFID technológia előnye a vonalkóddal szemben raktározásban?',opts:['Az RFID olcsóbb','RFID: nem szükséges látótávolság, egyszerre több tag olvasható, adatok írhatók a tagre, jobb kopásállóság. Vonalkód: olcsóbb, de optikai olvasás kell, egy tételt kell "meglőni"','Vonalkód jobb minden esetben','RFID csak tengeri szállításban működik'],c:1,e:'RFID (Radio Frequency Identification) vs vonalkód: RFID tömegolvasás (egy kapun átmenve 100 raklap beolvasható), adatfrissítés lehetséges, jobb tartomány, nincs szükség vizuális hozzáférésre. Hátrány: drágább. Vonalkód: olcsó, egyszerű, de lassabb és közvetlen látótávolság kell.'},
+      {q:'Mi az AGV (Automated Guided Vehicle) szerepe a raktárban?',opts:['Automatikus gépjárműellenőrzés','Autonóm, vezető nélküli szállítóeszköz, amely meghatározott útvonalakon (mágnessáv, lézer, kamera) anyagokat, raklapokat mozgat emberi beavatkozás nélkül','Automatikus GPS-vezérlő rendszer','Gáztöltő jármű'],c:1,e:'AGV: raktárakban és gyárakban anyagmozgatásra használt autonomizált jármű. Navigáció: induktív sínrendszer, lézernavigáció (LiDAR), kamera/QR-kód alapú. Modern változata az AMR (Autonomous Mobile Robot), amely akadályokat is kerül – nem kell rögzített útvonal.'},
+      {q:'Mi a "digitális iker" (digital twin) fogalma a logisztikában?',opts:['Megkettőzött adatbázis','A fizikai raktár, elosztási hálózat vagy szállítóeszköz valós idejű virtuális mása, amely lehetővé teszi a szimulációt, optimalizálást és hibaelőrejelzést','Azonos termékkódok kezelése','Backup szerver rendszer'],c:1,e:'Digital Twin: az IoT-szenzorokból érkező valós adatok alapján folyamatosan frissített virtuális modell. Logisztikában: raktár-layout optimalizálás szimulációval, szállítási útvonaltervezés, prediktív karbantartás gépeken – "kipróbálhatjuk" a változtatásokat a fizikai rendszer módosítása előtt.'},
+      {q:'Mit jelent az EDI (Electronic Data Interchange)?',opts:['Elektronikus Dokumentum Infrastruktúra','Vállalatok közötti strukturált adatok szabványos elektronikus cseréje (pl. megrendelések, szállítólevelek, számlák automatikusan, papír nélkül) szabványos formátumban (EDIFACT, XML, X12)','Raktári adatbeviteli interfész','Exportálási díj igazolás'],c:1,e:'EDI: megrendelés → szállítónak automatikusan (PO), visszaigazolás → vevőnek (PO Acknowledgment), szállítási előzetes értesítő (ASN – Advanced Ship Notice), számla (Invoice) – mind automatikusan, emberi beavatkozás nélkül. Csökkenti a hibákat, gyorsít, papírmentes.'}
+    ]
+  }
+];
+
+// ═══════════════════════════
+// APP STATE
+// ═══════════════════════════
+const S = { total:0, correct:0, catProg:{}, curCat:null, curQs:[], idx:0, answered:false, sOk:0, sNo:0 };
+
+function updNav(){
+  document.getElementById('nv-total').textContent=S.total;
+  document.getElementById('nv-ok').textContent=S.correct;
+  const p=S.total>0?Math.round(S.correct/S.total*100):0;
+  document.getElementById('nv-pct').textContent=p+'%';
+}
+
+// ═══════════════════════════
+// HOME
+// ═══════════════════════════
+function renderHome(){
+  const g=document.getElementById('cat-grid'); g.innerHTML='';
+  CATS.forEach(cat=>{
+    const pr=S.catProg[cat.id]||{d:0,ok:0};
+    const pct=cat.qs.length>0?Math.round(pr.d/cat.qs.length*100):0;
+    const c=document.createElement('div'); c.className='cat-card';
+    c.innerHTML=`<div class="cat-icon">${cat.icon}</div>
+      <div class="cat-name">${cat.name}</div>
+      <div class="cat-desc">${cat.desc}</div>
+      <div class="cat-meta"><span>📝 ${cat.qs.length} kérdés</span><span>✅ ${pr.ok}/${pr.d}</span></div>
+      <div class="cat-pb"><div class="cat-pf" style="width:${pct}%"></div></div>`;
+    c.onclick=()=>startQuiz(cat);
+    g.appendChild(c);
+  });
+}
+
+function goHome(){
+  ['quiz-screen','res-screen','cmr-screen','calc-screen','mrp-screen','fifo-screen','oee-screen','supplier-screen','makeorbuy-screen'].forEach(id=>{
+    document.getElementById(id).style.display='none';
+  });
+  document.getElementById('home').style.display='';
+  renderHome();
+}
+
+function showScreen(id){
+  ['home','quiz-screen','res-screen','cmr-screen','calc-screen','mrp-screen','fifo-screen','oee-screen','supplier-screen','makeorbuy-screen'].forEach(x=>{
+    document.getElementById(x).style.display='none';
+  });
+  document.getElementById(id).style.display='block';
+}
+
+// ═══════════════════════════
+// QUIZ
+// ═══════════════════════════
+function startQuiz(cat){
+  S.curCat=cat; S.curQs=[...cat.qs].sort(()=>Math.random()-.5);
+  S.idx=0; S.answered=false; S.sOk=0; S.sNo=0;
+  showScreen('quiz-screen');
+  document.getElementById('q-cat-lbl').textContent=cat.icon+' '+cat.name;
+  document.getElementById('q-title').textContent='';
+  buildStrip(); renderQ();
+}
+
+function buildStrip(){
+  const s=document.getElementById('pstrip'); s.innerHTML='';
+  S.curQs.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='pdot'+(i===0?' cur':''); d.id='pd'+i; s.appendChild(d);
+  });
+}
+
+function renderQ(){
+  S.answered=false;
+  const q=S.curQs[S.idx];
+  const lbs=['A','B','C','D'];
+  document.getElementById('q-container').innerHTML=`
+    <div class="qcard">
+      <div class="qnum">Kérdés ${S.idx+1} / ${S.curQs.length}</div>
+      <div class="qtxt">${q.q}</div>
+      ${q.extra?`<div class="qextra">${q.extra}</div>`:''}
+      <div class="answers" id="ans">
+        ${q.opts.map((o,i)=>`<button class="abtn" onclick="pick(${i})" data-i="${i}">
+          <span class="albl">${lbs[i]}</span><span>${o}</span></button>`).join('')}
+      </div>
+      <div id="exp"></div>
+      <button class="btn-next" id="bnxt" onclick="nextQ()">
+        ${S.idx<S.curQs.length-1?'Következő kérdés →':'Eredmény →'}
+      </button>
+    </div>`;
+}
+
+function pick(idx){
+  if(S.answered)return; S.answered=true;
+  const q=S.curQs[S.idx]; const ok=idx===q.c;
+  document.querySelectorAll('.abtn').forEach((b,i)=>{
+    b.classList.add('done');
+    if(i===q.c)b.classList.add('ok-ans');
+    else if(i===idx&&!ok)b.classList.add('no-ans');
+    else b.classList.add('dim');
+  });
+  document.getElementById('exp').innerHTML=`
+    <div class="exp-box">
+      <div class="exp-lbl">${ok?'✓ Helyes!':'✗ Helytelen'}</div>
+      <div class="exp-txt">${q.e}</div>
+    </div>`;
+  const dot=document.getElementById('pd'+S.idx);
+  if(dot){dot.classList.remove('cur');dot.classList.add(ok?'ok':'no');}
+  S.total++; if(ok){S.correct++;S.sOk++;}else S.sNo++;
+  if(!S.catProg[S.curCat.id])S.catProg[S.curCat.id]={d:0,ok:0};
+  S.catProg[S.curCat.id].d++;
+  if(ok)S.catProg[S.curCat.id].ok++;
+  updNav();
+  const bn=document.getElementById('bnxt'); if(bn)bn.classList.add('show');
+}
+
+function nextQ(){
+  S.idx++;
+  if(S.idx>=S.curQs.length){showResults();return;}
+  const d=document.getElementById('pd'+S.idx); if(d)d.classList.add('cur');
+  renderQ();
+}
+
+function showResults(){
+  showScreen('res-screen');
+  const tot=S.sOk+S.sNo; const pct=tot>0?Math.round(S.sOk/tot*100):0;
+  document.getElementById('r-pct').textContent=pct+'%';
+  document.getElementById('r-ok').textContent=S.sOk;
+  document.getElementById('r-no').textContent=S.sNo;
+  document.getElementById('r-tot').textContent=tot;
+  let title,msg;
+  if(pct>=90){title='🏆 Kiváló!';msg='Mesterszinten teljesítettél! Vizsgán is így megy majd.';}
+  else if(pct>=75){title='⭐ Szép munka!';msg='Jó eredmény, de pár területet érdemes még átismételni.';}
+  else if(pct>=50){title='📚 Tartsd a lendületet!';msg='Félúton vagy – az elmaradt kérdéseket érdemes újra megnézni.';}
+  else{title='💪 Ne add fel!';msg='Ebből a témakörből alaposabb felkészülés szükséges.';}
+  document.getElementById('r-title').textContent=title;
+  document.getElementById('r-msg').textContent=msg;
+  document.getElementById('r-retry').onclick=()=>startQuiz(S.curCat);
+}
+
+// ═══════════════════════════════════════════════════════════
+// CMR FUVARLEVÉL
+// ═══════════════════════════════════════════════════════════
+const CMR = {
+  scenario:{
+    title:'Forgatókönyv: Ipari berendezés szállítás Magyarország→Ausztria',
+    data:{
+      'Feladó (Consignor)':'Precíziós Kft., 9021 Győr, Alkotmány u. 8.',
+      'Átvevő (Consignee)':'Maschinenbau GmbH, Linzer Str. 45, 4020 Linz, Ausztria',
+      'Rendeltetési hely':'Linz, Ausztria',
+      'Rakodás helye és ideje':'Győr, 2026.03.20.',
+      'Áru megnevezése':'CNC marógép alkatrészek (nem ADR-köteles)',
+      'Csomagolás':'8 db euroraklap, nyújtott fóliával rögzítve',
+      'Bruttó tömeg':'1 240 kg',
+      'Köbméter':'4,8 m³',
+      'Fuvarozó':'EuroTrans Kft., 1211 Budapest, Csepeli u. 44.',
+      'Jármű frsz.':'BUD-789 / BUD-TR001',
+      'Fuvardíj fizetője':'Feladó (bérmentesített/franco)',
+      'Különleges kikötések':'Törékeny áru, óvatosan kezelendő'
+    }
+  },
+  fields:[
+    {id:'f1',num:'1',label:'Feladó neve és teljes címe',ans:'Precíziós Kft., 9021 Győr, Alkotmány u. 8.'},
+    {id:'f2',num:'2',label:'Átvevő neve és teljes címe',ans:'Maschinenbau GmbH, Linzer Str. 45, 4020 Linz'},
+    {id:'f3',num:'3',label:'Rendeltetési hely (város, ország)',ans:'Linz'},
+    {id:'f4',num:'4',label:'Rakodás helye és dátuma',ans:'Győr, 2026.03.20'},
+    {id:'f5',num:'16',label:'Fuvarozó neve és telephelye',ans:'EuroTrans Kft., 1211 Budapest'},
+    {id:'f6',num:'6',label:'Áru megnevezése',ans:'CNC marógép alkatrészek'},
+    {id:'f7',num:'8-9',label:'Csomagolás módja / csomagok száma',ans:'8 db euroraklap'},
+    {id:'f8',num:'11',label:'Bruttó tömeg (kg)',ans:'1240'},
+    {id:'f9',num:'23',label:'Jármű rendszáma (vontató + pótkocsi)',ans:'BUD-789 / BUD-TR001'},
+    {id:'f10',num:'13',label:'Fuvardíj fizetője / fizetési mód',ans:'Feladó'},
+    {id:'f11',num:'19',label:'Különleges kikötések',ans:'Törékeny'},
+  ]
+};
+
+function renderCMR(){
+  const s=CMR.scenario;
+  const dataH=Object.entries(s.data).map(([k,v])=>`<div><strong style="color:var(--gold-d)">${k}:</strong> ${v}</div>`).join('');
+  const fields=CMR.fields.map(f=>`
+    <div class="cmr-cell">
+      <div class="cmr-cnum">Mező ${f.num}</div>
+      <div class="cmr-clbl">${f.label}</div>
+      <input class="cmr-inp" id="cmr-${f.id}" placeholder="…" />
+    </div>`).join('');
+  document.getElementById('cmr-content').innerHTML=`
+    <div class="cmr-wrap">
+      <div class="cmr-hdr">
+        <div><div class="cmr-logo">CMR</div><div class="cmr-sub">FUVARLEVÉL · CONSIGNMENT NOTE · FRACHTBRIEF</div></div>
+        <div style="text-align:right;font-size:11px;color:var(--td)">Convention on the Contract for the<br>International Carriage of Goods by Road<br><span style="color:var(--gold-d)">Töltsd ki a forgatókönyv alapján!</span></div>
+      </div>
+      <div class="cmr-body">
+        <div class="cmr-scenario">
+          <div class="cmr-stitle">📋 ${s.title}</div>
+          <div class="cmr-sdata">${dataH}</div>
+        </div>
+        <p style="font-size:13px;color:var(--tm);margin-bottom:14px">A fenti adatok alapján töltsd ki a CMR fuvarlevél mezőit, majd kattints az Ellenőrzésre!</p>
+        <div class="cmr-grid">${fields}</div>
+        <div>
+          <button class="cmr-chk" onclick="checkCMR()">✓ Ellenőrzés</button>
+          <button class="btn-sec" style="margin-top:16px" onclick="resetCMR()">↺ Törlés</button>
+        </div>
+        <div id="cmr-res" style="display:none;margin-top:14px"></div>
+      </div>
+    </div>
+    <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);padding:20px;margin-top:18px">
+      <div style="font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);margin-bottom:10px">📌 CMR Vizsgaanyag</div>
+      <div style="font-size:13px;color:var(--tm);line-height:1.8">
+        <b style="color:var(--text)">Példányszám:</b> Min. 3 eredeti – piros: feladónak, kék: áruval utazik, zöld: fuvarozónak.<br>
+        <b style="color:var(--text)">Felelősség:</b> CMR 17. cikk – fuvarozó felel az átvételtől kiszolgáltatásig. Max: 8,33 SDR/kg.<br>
+        <b style="color:var(--text)">Reklamáció:</b> Nyilvánvaló sérülés: átvételkor. Rejtett: 7 napon belül írásban.<br>
+        <b style="color:var(--text)">Elévülés:</b> 1 év (szándékos károkozás: 3 év).<br>
+        <b style="color:var(--text)">Tiszta fuvarlevél:</b> fenntartás nélküli aláírás = fuvarozó elismeri az áru látható sértetlen állapotát.
+      </div>
+    </div>`;
+}
+
+function checkCMR(){
+  let ok=0;
+  CMR.fields.forEach(f=>{
+    const inp=document.getElementById('cmr-'+f.id); if(!inp)return;
+    const v=inp.value.trim().toLowerCase(), a=f.ans.toLowerCase();
+    const match=v.length>1&&(a.includes(v.substring(0,Math.min(v.length,8)))||v.includes(a.split(',')[0].split(' ')[0].substring(0,6)));
+    inp.classList.remove('ok','bad'); inp.classList.add(match?'ok':'bad');
+    if(match)ok++;
+  });
+  const pct=Math.round(ok/CMR.fields.length*100);
+  const res=document.getElementById('cmr-res'); res.style.display='block';
+  res.innerHTML=`<div class="fb-box ${pct>=70?'fb-ok':'fb-bad'}">
+    <strong style="color:${pct>=70?'var(--green)':'var(--red)'}">${ok}/${CMR.fields.length} mező helyes – ${pct}%</strong>
+    <div style="margin-top:5px;color:var(--tm);font-size:13px">${pct>=70?'Kiválóan töltötted ki a CMR fuvarlevelet!':'A piros mezőket javítsd a forgatókönyv adatai alapján.'}</div>
+  </div>`;
+}
+
+function resetCMR(){
+  CMR.fields.forEach(f=>{const i=document.getElementById('cmr-'+f.id);if(i){i.value='';i.classList.remove('ok','bad');}});
+  document.getElementById('cmr-res').style.display='none';
+}
+
+// ═══════════════════════════════════════════════════════════
+// SZÁMÍTÁSI FELADATOK (EOQ, biztonsági készlet, rendelési pont)
+// ═══════════════════════════════════════════════════════════
+const CALCS=[
+  {id:'c1',title:'EOQ – Gazdaságos rendelési mennyiség',
+   q:'Egy alkatrészből az éves igény 4 800 db. Egy rendelés feladásának fix költsége 6 000 Ft. Egy darab éves tárolási költsége 150 Ft/db/év. Mekkora a gazdaságos rendelési mennyiség (EOQ)?',
+   data:'D = 4 800 db/év | S = 6 000 Ft/rendelés | H = 150 Ft/db/év',
+   ans:619,tol:5,unit:'db',
+   hint:'EOQ = √(2 × D × S / H)',
+   sol:'EOQ = √(2 × 4800 × 6000 / 150) = √(57 600 000 / 150) = √384 000 ≈ 619,7 ≈ 620 db'},
+  {id:'c2',title:'Rendelési és tárolási összköltség',
+   q:'Az előző feladat adatai alapján (D=4800, S=6000, H=150, EOQ≈620) számítsd ki az éves optimális összes készletgazdálkodási költséget (rendelési + tárolási)!',
+   data:'D=4800 | S=6000 | H=150 | EOQ=620',
+   ans:92966,tol:500,unit:'Ft/év',
+   hint:'TC = (D/EOQ)×S + (EOQ/2)×H',
+   sol:'Rendelési ktg: (4800/620)×6000 ≈ 46 451 Ft. Tárolási ktg: (620/2)×150 = 46 500 Ft. TC ≈ 92 951 Ft/év'},
+  {id:'c3',title:'Rendelési készletszint (Reorder Point)',
+   q:'Egy termékből az átlagos napi felhasználás 30 db. Az átfutási idő (lead time) 7 nap. A biztonsági készlet 60 db. Mikor kell rendelni (mi a rendelési pont)?',
+   data:'Napi igény: 30 db | Lead time: 7 nap | Biztonsági készlet: 60 db',
+   ans:270,tol:2,unit:'db',
+   hint:'ROP = (napi igény × lead time) + biztonsági készlet',
+   sol:'ROP = (30 × 7) + 60 = 210 + 60 = 270 db. Ha a készlet eléri a 270 db-ot, rendelni kell!'},
+  {id:'c4',title:'Biztonsági készlet számítás',
+   q:'Maximális napi igény: 55 db, átlagos napi igény: 40 db. Maximum szállítási idő: 10 nap, átlagos szállítási idő: 7 nap. Mekkora a szükséges biztonsági készlet?',
+   data:'Max igény: 55 db/nap | Átlag igény: 40 db/nap | Max lead time: 10 nap | Átlag lead time: 7 nap',
+   ans:270,tol:5,unit:'db',
+   hint:'SS = (Max igény × Max LT) − (Átlag igény × Átlag LT)',
+   sol:'SS = (55 × 10) − (40 × 7) = 550 − 280 = 270 db'},
+  {id:'c5',title:'Készletforgás és DSI',
+   q:'Egy vállalat éves COGS értéke 72 000 000 Ft. Átlagos készletértéke 9 000 000 Ft. Hány napos a készlet átlagos tartózkodási ideje (DSI, 360 napos évvel)?',
+   data:'COGS = 72 000 000 Ft | Átlagos készlet = 9 000 000 Ft | Év = 360 nap',
+   ans:45,tol:1,unit:'nap',
+   hint:'Forgás = COGS/Készlet; DSI = 360/Forgás',
+   sol:'Forgás = 72M/9M = 8 fordulat/év. DSI = 360/8 = 45 nap'},
+  {id:'c6',title:'LDM (Rakodási méter) számítás',
+   q:'Egy szállítmány 6 db euroraklapból áll (1,2 × 0,8 m). A teherautó belső szélessége 2,4 m. Hány LDM-t foglal el a szállítmány?',
+   data:'6 db euroraklap | Raklap: 1,2 m × 0,8 m | Jármű szélesség: 2,4 m',
+   ans:2.4,tol:0.05,unit:'LDM',
+   hint:'Egymás mellé 3 raklap fér (3×0,8=2,4m), 6/3=2 sor → 2×1,2=2,4 LDM',
+   sol:'3 raklap fér egymás mellé (3×0,8m=2,4m). 6 raklap / 3 = 2 sor. 2 × 1,2 m = 2,4 LDM'}
+];
+
+function renderCalc(){
+  document.getElementById('calc-content').innerHTML=CALCS.map((p,i)=>`
+    <div class="prob-card">
+      <div class="prob-lbl">Feladat ${i+1} · ${p.title}</div>
+      <div class="prob-q">${p.q}</div>
+      <div class="prob-data">📊 ${p.data}</div>
+      <div style="font-size:12px;color:var(--td);margin-bottom:12px">💡 Segítség: <em>${p.hint}</em></div>
+      <div class="inp-row">
+        <input type="number" class="calc-inp" id="ci-${p.id}" placeholder="Eredmény…" step="any"/>
+        <span class="unit">${p.unit}</span>
+        <button class="chk-btn" onclick="chkCalc('${p.id}',${p.ans},${p.tol})">Ellenőrzés</button>
+      </div>
+      <div id="cf-${p.id}" style="display:none"></div>
+    </div>`).join('');
+}
+
+function chkCalc(id,ans,tol){
+  const inp=document.getElementById('ci-'+id);
+  const v=parseFloat(inp.value);
+  const ok=!isNaN(v)&&Math.abs(v-ans)<=tol;
+  inp.classList.remove('ok','bad'); inp.classList.add(ok?'ok':'bad');
+  const p=CALCS.find(x=>x.id===id);
+  const fb=document.getElementById('cf-'+id); fb.style.display='block';
+  fb.innerHTML=`<div class="fb-box ${ok?'fb-ok':'fb-bad'}">
+    <strong style="color:${ok?'var(--green)':'var(--red)'}">${ok?'✓ Helyes!':'✗ Nem pontos'}</strong>
+    <div style="margin-top:5px;color:var(--tm);font-size:13px"><b>Helyes: ${ans} ${p.unit}</b><br>${p.sol}</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// MRP TÁBLA
+// ═══════════════════════════════════════════════════════════
+const MRP_DATA = {
+  scenario:'Egy termékből a következő 5 hétre ismert a bruttó igény. Kezdeti készlet: 80 db. Biztonsági készlet: 20 db. Tételnagyság: 100 db (fix). Lead time: 1 hét.',
+  weeks:[1,2,3,4,5],
+  grossReq:[60,90,70,110,80],
+  // Correct answers: scheduled receipts 0, projected inventory, net req, planned orders
+  // Week1: PI=80-60=20, NR=0, PO=0
+  // Week2: PI=20-90=-70+100=30(+100 receipt), NR=70+20-20=70, PO=100 (w1)
+  // Week3: PI=30-70=-40+100=60, NR=40+20=60, PO=100 (w2)
+  // Week4: PI=60-110=-50+100=50+100=100-10=70, NR=50+20=70, PO=100 (w3) – actually 2×100
+  // Simplified for interactive:
+  answers:{
+    projInv:[20,30,60,50,70],   // projected inventory end of period
+    netReq:[0,70,40,70,50],     // net requirements
+    plannedOrder:[0,100,100,100,100] // planned order releases (lead 1 week ahead)
+  }
+};
+
+function renderMRP(){
+  const d=MRP_DATA;
+  document.getElementById('mrp-content').innerHTML=`
+    <div class="prob-card">
+      <div class="prob-lbl">MRP Tábla – Anyagszükséglet-tervezés</div>
+      <div class="prob-q">Töltsd ki az MRP táblát az alábbi adatok alapján!</div>
+      <div class="prob-data">📊 ${d.scenario}</div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Sor / Hét</th>${d.weeks.map(w=>`<th>Hét ${w}</th>`).join('')}</tr>
+          <tr><td style="color:var(--text)"><b>Bruttó igény</b></td>${d.grossReq.map(v=>`<td style="color:var(--gold)">${v}</td>`).join('')}</tr>
+          <tr><td style="color:var(--text)">Ütemezett bevételek</td>${d.weeks.map((_,i)=>`<td><input id="mrp-sr-${i}" type="number" placeholder="0"/></td>`).join('')}</tr>
+          <tr><td style="color:var(--text)">Ütemezett raktárkészlet</td>${d.weeks.map((_,i)=>`<td><input id="mrp-pi-${i}" type="number" placeholder="?"/></td>`).join('')}</tr>
+          <tr><td style="color:var(--text)">Nettó igény</td>${d.weeks.map((_,i)=>`<td><input id="mrp-nr-${i}" type="number" placeholder="?"/></td>`).join('')}</tr>
+          <tr><td style="color:var(--text)">Tervezett rendelések</td>${d.weeks.map((_,i)=>`<td><input id="mrp-po-${i}" type="number" placeholder="?"/></td>`).join('')}</tr>
+        </table>
+      </div>
+      <button class="chk-btn" onclick="checkMRP()">✓ Ellenőrzés</button>
+      <div id="mrp-fb" style="display:none;margin-top:14px"></div>
+    </div>
+    <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);padding:18px;margin-top:16px">
+      <div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--gold);margin-bottom:8px">📌 MRP számítás menete</div>
+      <div style="font-size:13px;color:var(--tm);line-height:1.8">
+        <b style="color:var(--text)">Ütemezett raktárkészlet</b> = előző heti készlet + ütemezett bevételek − bruttó igény<br>
+        <b style="color:var(--text)">Nettó igény</b> = ha a raktárkészlet a biztonsági készlet alá esik: hiány + biztonsági készlet − bevételek<br>
+        <b style="color:var(--text)">Tervezett rendelés</b> = nettó igényre kerekített tételnagyság, 1 héttel előre ütemezve (lead time)<br>
+        <b style="color:var(--text)">Kezdeti készlet:</b> 80 db | <b style="color:var(--text)">Biztonsági készlet:</b> 20 db | <b style="color:var(--text)">Tételnagyság:</b> 100 db
+      </div>
+    </div>`;
+}
+
+function checkMRP(){
+  const d=MRP_DATA; let ok=0,tot=0;
+  const rows=[
+    {prefix:'mrp-pi',ans:d.answers.projInv,name:'Ütemezett raktárkészlet'},
+    {prefix:'mrp-nr',ans:d.answers.netReq,name:'Nettó igény'},
+    {prefix:'mrp-po',ans:d.answers.plannedOrder,name:'Tervezett rendelések'}
+  ];
+  rows.forEach(row=>{
+    row.ans.forEach((a,i)=>{
+      const inp=document.getElementById(row.prefix+'-'+i); if(!inp)return;
+      const v=parseInt(inp.value);
+      const match=!isNaN(v)&&Math.abs(v-a)<=5;
+      inp.classList.remove('ok','bad'); inp.classList.add(match?'ok':'bad');
+      if(match)ok++; tot++;
+    });
+  });
+  const fb=document.getElementById('mrp-fb'); fb.style.display='block';
+  const pct=Math.round(ok/tot*100);
+  fb.innerHTML=`<div class="fb-box ${pct>=70?'fb-ok':'fb-bad'}">
+    <strong style="color:${pct>=70?'var(--green)':'var(--red)'}">${ok}/${tot} cella helyes – ${pct}%</strong>
+    <div style="margin-top:6px;color:var(--tm);font-size:13px">
+      Helyes megoldás: Ütemezett készlet: ${d.answers.projInv.join(', ')} | Nettó igény: ${d.answers.netReq.join(', ')} | Tervezett rendelések: ${d.answers.plannedOrder.join(', ')}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// FIFO / LIFO / HIFO
+// ═══════════════════════════════════════════════════════════
+const FIFO_DATA = {
+  scenario:'Egy vállalat raktárába az alábbi tételek érkeztek be, majd az adott napon kiszedés történt. Számítsd ki az elhasznált anyagköltséget és a záró készletértéket FIFO, LIFO és HIFO módszerrel!',
+  movements:[
+    {date:'Jan 5.',type:'Bevételezés',qty:100,price:500},
+    {date:'Jan 12.',type:'Bevételezés',qty:80,price:550},
+    {date:'Jan 18.',type:'Kiszedés',qty:120,price:null},
+    {date:'Jan 25.',type:'Bevételezés',qty:60,price:600},
+    {date:'Jan 30.',type:'Kiszedés',qty:70,price:null},
+  ],
+  // FIFO: first 120 out = 100×500 + 20×550 = 61000. Remaining: 60×550 + 60×600
+  // Then 70 out = 60×550 + 10×600 = 33000+6000=39000. Total used=100000. Closing=50×600=30000
+  fifo:{used:100000, closing:30000},
+  // LIFO: 120 out = 80×550+40×500 = 44000+20000=64000. Remaining: 60×500+60×600
+  // 70 out = 60×600+10×500 = 36000+5000=41000. Total=105000. Closing=50×500=25000
+  lifo:{used:105000, closing:25000},
+  // HIFO: highest price first. 120 out = 80×550+40×500=64000. Remaining: 60×500+60×600
+  // 70 out = 60×600+10×500=41000. Same as LIFO here.
+  hifo:{used:105000, closing:25000}
+};
+
+function renderFIFO(){
+  const d=FIFO_DATA;
+  const moves=d.movements.map(m=>`<tr>
+    <td>${m.date}</td>
+    <td style="color:${m.type==='Bevételezés'?'var(--green)':'var(--red)'}">${m.type}</td>
+    <td>${m.qty} db</td>
+    <td>${m.price?m.price+' Ft/db':'—'}</td>
+    <td>${m.price?m.qty*m.price+' Ft':'kiszedés'}</td>
+  </tr>`).join('');
+  document.getElementById('fifo-content').innerHTML=`
+    <div class="prob-card">
+      <div class="prob-lbl">Készletértékelés – FIFO / LIFO / HIFO</div>
+      <div class="prob-q">${d.scenario}</div>
+      <div class="tbl-wrap"><table>
+        <tr><th>Dátum</th><th>Típus</th><th>Mennyiség</th><th>Egységár</th><th>Érték</th></tr>
+        ${moves}
+      </table></div>
+      <div style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+        ${['FIFO','LIFO','HIFO'].map(m=>`
+        <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--rs);padding:16px">
+          <div style="font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);margin-bottom:10px">${m} módszer</div>
+          <div class="inp-row" style="margin-bottom:8px">
+            <label style="font-size:12px;color:var(--tm);width:160px">Elhasznált anyagköltség:</label>
+            <input type="number" class="calc-inp" id="${m.toLowerCase()}-used" placeholder="Ft" style="width:110px;flex:none"/>
+            <span class="unit">Ft</span>
+          </div>
+          <div class="inp-row">
+            <label style="font-size:12px;color:var(--tm);width:160px">Záró készletérték:</label>
+            <input type="number" class="calc-inp" id="${m.toLowerCase()}-close" placeholder="Ft" style="width:110px;flex:none"/>
+            <span class="unit">Ft</span>
+          </div>
+          <button class="chk-btn" style="margin-top:10px;width:100%" onclick="checkFIFO('${m.toLowerCase()}')">Ellenőrzés</button>
+          <div id="${m.toLowerCase()}-fb" style="display:none;margin-top:8px"></div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);padding:18px;margin-top:16px">
+      <div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--gold);margin-bottom:8px">📌 Módszerek összehasonlítása</div>
+      <div style="font-size:13px;color:var(--tm);line-height:1.8">
+        <b style="color:var(--text)">FIFO</b> (First In, First Out): legrégebbi készlet megy ki először → infláció esetén alacsonyabb elhasznált ktg., magasabb nyereség<br>
+        <b style="color:var(--text)">LIFO</b> (Last In, First Out): legújabb készlet megy ki először → infláció esetén magasabb ktg., alacsonyabb nyereség. (EU-ban adózásra nem elfogadott)<br>
+        <b style="color:var(--text)">HIFO</b> (Highest In, First Out): legdrágább készlet megy ki először → legmagasabb elhasznált ktg., legkisebb nyereség<br>
+        <b style="color:var(--text)">ÁTLAGÁRAS módszer</b> (súlyozott átlag): az összes bevételezés átlagára alapján értékel – legegyszerűbb, Magyarországon leggyakoribb
+      </div>
+    </div>`;
+}
+
+function checkFIFO(method){
+  const correct={fifo:FIFO_DATA.fifo,lifo:FIFO_DATA.lifo,hifo:FIFO_DATA.hifo};
+  const ans=correct[method];
+  const usedInp=document.getElementById(method+'-used');
+  const closeInp=document.getElementById(method+'-close');
+  const u=parseFloat(usedInp.value), c=parseFloat(closeInp.value);
+  const uOk=!isNaN(u)&&Math.abs(u-ans.used)<=500;
+  const cOk=!isNaN(c)&&Math.abs(c-ans.closing)<=500;
+  usedInp.classList.remove('ok','bad'); usedInp.classList.add(uOk?'ok':'bad');
+  closeInp.classList.remove('ok','bad'); closeInp.classList.add(cOk?'ok':'bad');
+  const fb=document.getElementById(method+'-fb'); fb.style.display='block';
+  const both=uOk&&cOk;
+  fb.innerHTML=`<div class="fb-box ${both?'fb-ok':'fb-bad'}">
+    <strong style="color:${both?'var(--green)':'var(--red)'}">${both?'✓ Mindkettő helyes!':'Ellenőrizd!'}</strong>
+    <div style="font-size:12px;color:var(--tm);margin-top:4px">Elhasznált: ${ans.used.toLocaleString()} Ft | Záró: ${ans.closing.toLocaleString()} Ft</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// OEE
+// ═══════════════════════════════════════════════════════════
+const OEE_DATA = {
+  scenario:'Egy CNC gép adatai egy műszakra (8 óra = 480 perc): Tervezett leállás (szünet, átvétel): 30 perc. Nem tervezett leállás (meghibásodás, beállítás): 48 perc. Ideális ciklusidő: 1 perc/db. Ténylegesen gyártott db: 360 db. Ebből selejt: 18 db.',
+  // Tervezett gyártási idő = 480-30 = 450 perc
+  // Tényleges működési idő = 450-48 = 402 perc
+  // Rendelkezésre állás (A) = 402/450 = 89,3%
+  // Teljesítmény (P) = 360/(402×1) = 89,6%
+  // Minőség (Q) = (360-18)/360 = 95,0%
+  // OEE = 0,893 × 0,896 × 0,950 = 75,9%
+  answers:{ A:89.3, P:89.6, Q:95.0, OEE:75.9 }
+};
+
+function renderOEE(){
+  const d=OEE_DATA;
+  document.getElementById('oee-content').innerHTML=`
+    <div class="prob-card">
+      <div class="prob-lbl">OEE – Teljes Eszközhatékonysági Mutató</div>
+      <div class="prob-q">Számítsd ki az OEE összetevőit és végeredményét!</div>
+      <div class="prob-data">📊 ${d.scenario}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:14px">
+        ${[
+          {id:'A',label:'Rendelkezésre állás (A)',hint:'Tényleges idő / Tervezett idő × 100',unit:'%'},
+          {id:'P',label:'Teljesítmény (P)',hint:'Gyártott db / (Tényleges idő × ideális ciklus) × 100',unit:'%'},
+          {id:'Q',label:'Minőség (Q)',hint:'Jó termékek / Összes termék × 100',unit:'%'},
+          {id:'OEE',label:'OEE = A × P × Q',hint:'Szorzatuk / 10000 (ha %-ban)',unit:'%'}
+        ].map(f=>`
+        <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--rs);padding:16px">
+          <div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--gold);margin-bottom:4px">${f.label}</div>
+          <div style="font-size:11px;color:var(--td);margin-bottom:10px">💡 ${f.hint}</div>
+          <div class="inp-row">
+            <input type="number" step="0.1" class="calc-inp" id="oee-${f.id}" placeholder="0.0"/>
+            <span class="unit">${f.unit}</span>
+            <button class="chk-btn" onclick="chkOEE('${f.id}')">✓</button>
+          </div>
+          <div id="oee-fb-${f.id}" style="display:none;margin-top:8px"></div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);padding:18px;margin-top:16px">
+      <div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--gold);margin-bottom:8px">📌 OEE értelmezése</div>
+      <div style="font-size:13px;color:var(--tm);line-height:1.8">
+        <b style="color:var(--text)">World class OEE</b> ≥ 85% | Átlagos gyár: ~60% | 40% alatti OEE súlyos problémákat jelez<br>
+        <b style="color:var(--text)">Rendelkezésre állás veszteségek:</b> meghibásodás, beállítási idő<br>
+        <b style="color:var(--text)">Teljesítmény veszteségek:</b> kis leállások, csökkentett sebesség<br>
+        <b style="color:var(--text)">Minőségi veszteségek:</b> selejt, újrafeldolgozás, beindítási veszteség
+      </div>
+    </div>`;
+}
+
+function chkOEE(id){
+  const d=OEE_DATA; const ans=d.answers[id];
+  const inp=document.getElementById('oee-'+id);
+  const v=parseFloat(inp.value); const ok=!isNaN(v)&&Math.abs(v-ans)<=0.5;
+  inp.classList.remove('ok','bad'); inp.classList.add(ok?'ok':'bad');
+  const fb=document.getElementById('oee-fb-'+id); fb.style.display='block';
+  fb.innerHTML=`<div class="fb-box ${ok?'fb-ok':'fb-bad'}" style="padding:8px 12px;font-size:12px">
+    ${ok?'✓ Helyes!':'✗ Helyes érték: '+ans+'%'}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// BESZÁLLÍTÓI ÉRTÉKELÉS
+// ═══════════════════════════════════════════════════════════
+const SUPPLIER_DATA = {
+  scenario:'Három potenciális beszállítót kell értékelni súlyozott pontszám módszerrel. Súlyok: Ár 35%, Minőség 30%, Szállítási pontosság 20%, Rugalmasság 15%.',
+  suppliers:['Alfa Kft.','Beta Zrt.','Gamma Bt.'],
+  criteria:[
+    {name:'Ár',weight:35,scores:[8,7,9]},
+    {name:'Minőség',weight:30,scores:[9,8,7]},
+    {name:'Szállítási pontosság',weight:20,scores:[7,9,8]},
+    {name:'Rugalmasság',weight:15,scores:[6,7,8]}
+  ],
+  // Alfa: 8×35+9×30+7×20+6×15 = 280+270+140+90 = 780 → /100 = 7,80
+  // Beta: 7×35+8×30+9×20+7×15 = 245+240+180+105 = 770 → /100 = 7,70
+  // Gamma: 9×35+7×30+8×20+8×15 = 315+210+160+120 = 805 → /100 = 8,05
+  answers:[7.80, 7.70, 8.05],
+  winner:2 // index of Gamma
+};
+
+function renderSupplier(){
+  const d=SUPPLIER_DATA;
+  const rows=d.criteria.map(c=>`<tr>
+    <td>${c.name}</td><td style="color:var(--gold)">${c.weight}%</td>
+    ${c.scores.map(s=>`<td style="color:var(--text)">${s}/10</td>`).join('')}
+  </tr>`).join('');
+  const inputs=d.suppliers.map((s,i)=>`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <span style="min-width:90px;font-size:13px;color:var(--tm)">${s}</span>
+      <input type="number" step="0.01" class="calc-inp" id="sup-${i}" placeholder="0.00" style="width:80px;flex:none"/>
+      <span class="unit">pont</span>
+    </div>`).join('');
+  document.getElementById('supplier-content').innerHTML=`
+    <div class="prob-card">
+      <div class="prob-lbl">Beszállítói Értékelés – Súlyozott Pontszám Módszer</div>
+      <div class="prob-q">${d.scenario}</div>
+      <div class="tbl-wrap"><table>
+        <tr><th>Szempont</th><th>Súly</th>${d.suppliers.map(s=>`<th>${s}</th>`).join('')}</tr>
+        ${rows}
+        <tr><td colspan="2" style="color:var(--gold);font-weight:600">Súlyozott összpontszám</td>${d.suppliers.map((_,i)=>`<td><input type="number" step="0.01" class="calc-inp" id="sup-${i}" placeholder="?"/></td>`).join('')}</tr>
+      </table></div>
+      <button class="chk-btn" style="margin-top:14px" onclick="checkSupplier()">✓ Ellenőrzés + Döntés</button>
+      <div id="sup-fb" style="display:none;margin-top:14px"></div>
+    </div>
+    <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);padding:18px;margin-top:16px">
+      <div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--gold);margin-bottom:8px">📌 Számítás menete</div>
+      <div style="font-size:13px;color:var(--tm);line-height:1.8">
+        Súlyozott pont = Σ (Szempont pontszáma × Súly%) / 100<br>
+        Pl. Alfa: (8×35 + 9×30 + 7×20 + 6×15) / 100 = 780/100 = <b style="color:var(--text)">7,80 pont</b>
+      </div>
+    </div>`;
+}
+
+function checkSupplier(){
+  const d=SUPPLIER_DATA; let ok=0;
+  d.answers.forEach((ans,i)=>{
+    const inp=document.getElementById('sup-'+i); if(!inp)return;
+    const v=parseFloat(inp.value); const match=!isNaN(v)&&Math.abs(v-ans)<=0.05;
+    inp.classList.remove('ok','bad'); inp.classList.add(match?'ok':'bad');
+    if(match)ok++;
+  });
+  const fb=document.getElementById('sup-fb'); fb.style.display='block';
+  const winner=d.suppliers[d.winner];
+  fb.innerHTML=`<div class="fb-box ${ok===d.answers.length?'fb-ok':'fb-bad'}">
+    <strong style="color:${ok===d.answers.length?'var(--green)':'var(--red)'}">${ok}/${d.answers.length} helyes</strong>
+    <div style="margin-top:6px;color:var(--tm);font-size:13px">
+      Helyes pontszámok: ${d.suppliers.map((s,i)=>`${s}: <b style="color:var(--text)">${d.answers[i]}</b>`).join(' | ')}<br>
+      <b style="color:var(--gold)">🏆 Döntés: ${winner} a legmagasabb pontszámmal (${d.answers[d.winner]} pont) – ezt a szállítót érdemes választani!</b>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// MAKE OR BUY
+// ═══════════════════════════════════════════════════════════
+const MOB_DATA = {
+  scenario:'Egy alkatrész gyártásának fix költsége 2 400 000 Ft/év (gép, rezsi), változó ktg: 320 Ft/db. Külső beszerző ár: 500 Ft/db. Gyártásnál plusz minőség-ellenőrzési ktg: 40 Ft/db.',
+  // Gyártani: FC + (320+40)×Q = 2400000 + 360Q
+  // Beszerezni: 500Q
+  // Közömbösségi pont: 2400000 + 360Q = 500Q → 2400000 = 140Q → Q = 17143 db
+  fixCost:2400000,
+  makeVar:360,
+  buyPrice:500,
+  breakEven:17143,
+  // At Q=20000: make=2400000+360×20000=9600000, buy=500×20000=10000000 → make cheaper
+  question:'Mi a közömbösségi pont (breakeven)? Hány db felett éri meg gyártani?'
+};
+
+function renderMakeOrBuy(){
+  const d=MOB_DATA;
+  document.getElementById('makeorbuy-content').innerHTML=`
+    <div class="prob-card">
+      <div class="prob-lbl">Make or Buy – Gyártani vagy Beszerezni?</div>
+      <div class="prob-q">${d.question}</div>
+      <div class="prob-data">📊 ${d.scenario}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">
+        <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--rs);padding:14px">
+          <div style="font-size:12px;color:var(--gold);margin-bottom:8px">GYÁRTÁS teljes költsége Q=20 000 db esetén:</div>
+          <div class="inp-row">
+            <input type="number" class="calc-inp" id="mob-make" placeholder="Ft"/>
+            <span class="unit">Ft</span>
+            <button class="chk-btn" onclick="chkMOB('make',9600000)">✓</button>
+          </div>
+          <div id="mob-make-fb" style="display:none;margin-top:6px"></div>
+        </div>
+        <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--rs);padding:14px">
+          <div style="font-size:12px;color:var(--gold);margin-bottom:8px">BESZEREZNI teljes költség Q=20 000 db esetén:</div>
+          <div class="inp-row">
+            <input type="number" class="calc-inp" id="mob-buy" placeholder="Ft"/>
+            <span class="unit">Ft</span>
+            <button class="chk-btn" onclick="chkMOB('buy',10000000)">✓</button>
+          </div>
+          <div id="mob-buy-fb" style="display:none;margin-top:6px"></div>
+        </div>
+      </div>
+      <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--rs);padding:14px;margin-top:14px">
+        <div style="font-size:12px;color:var(--gold);margin-bottom:8px">🎯 Közömbösségi pont (db, ahol gyártás = beszerző ár):</div>
+        <div class="inp-row">
+          <input type="number" class="calc-inp" id="mob-be" placeholder="db"/>
+          <span class="unit">db</span>
+          <button class="chk-btn" onclick="chkMOB('be',17143)">✓</button>
+        </div>
+        <div id="mob-be-fb" style="display:none;margin-top:6px"></div>
+      </div>
+    </div>
+    <div style="background:var(--d3);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);padding:18px;margin-top:16px">
+      <div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--gold);margin-bottom:8px">📌 Make or Buy döntés logikája</div>
+      <div style="font-size:13px;color:var(--tm);line-height:1.8">
+        <b style="color:var(--text)">Gyártási ktg:</b> FC + (Változó gyártási ktg + QE ktg) × Q = 2 400 000 + 360 × Q<br>
+        <b style="color:var(--text)">Beszerző ktg:</b> Beszerző ár × Q = 500 × Q<br>
+        <b style="color:var(--text)">Közömbösségi pont:</b> FC / (Beszerző ár − Változó ktg) = 2 400 000 / (500−360) = 2 400 000 / 140 = 17 143 db<br>
+        <b style="color:var(--text)">17 143 db felett</b> → gyártani olcsóbb! | <b style="color:var(--text)">17 143 db alatt</b> → beszerezni olcsóbb!
+      </div>
+    </div>`;
+}
+
+function chkMOB(id,ans){
+  const inp=document.getElementById('mob-'+id);
+  const v=parseFloat(inp.value); const ok=!isNaN(v)&&Math.abs(v-ans)<=ans*0.01;
+  inp.classList.remove('ok','bad'); inp.classList.add(ok?'ok':'bad');
+  const fb=document.getElementById('mob-'+id+'-fb'); fb.style.display='block';
+  fb.innerHTML=`<div class="fb-box ${ok?'fb-ok':'fb-bad'}" style="padding:8px 12px;font-size:12px">
+    ${ok?'✓ Helyes!':'✗ Helyes: '+ans.toLocaleString()+' '+(id==='be'?'db':'Ft')}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+setTimeout(()=>{
+  document.getElementById('splash').classList.add('gone');
+  renderHome(); updNav();
+}, 3200);
+</script>
+</body>
+</html>
